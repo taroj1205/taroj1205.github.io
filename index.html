@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="https://cdn.profile-image.st-hatena.com/users/taroj1205/profile.png?1606024862">
     <title>僕について</title>
     <style>
@@ -21,9 +22,11 @@
           color: var(--color-white-100);
           background-color: var(--color-black-500);
         }
+
         main {
           overflow: hidden;
         }
+
         main {
             max-width: 1000px;
             margin-top: auto;
@@ -33,12 +36,12 @@
         }
 
         main a {
-          color: #8ab4f8;
+            color: #8ab4f8;
         }
 
-        table {
+        section#education table {
             position: relative;
-            overflow: auto;
+            width: 950px;
         }
 
         section#education table, th, td {
@@ -46,6 +49,8 @@
             border-collapse: collapse;
             padding: 0.25rem;
         }
+
+        section#education tr:nth-child(even){background-color: #170f0f}
 
         section#education th {
             background-color:green;
@@ -157,23 +162,24 @@
           box-shadow: var(--shadow-medium);
         }
         .navbar {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: flex-start;
-          column-gap: 1rem;
-          width: 100%;
-          height: 4.25rem;
-          margin: 0 auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            column-gap: 1rem;
+            width: 100%;
+            height: 4.25rem;
+            margin: 0 auto;
         }
         .header_aboutme {
-          font-family: inherit;
-          font-size: 1.625rem;
-          font-weight: 600;
-          line-height: 1.5;
-          letter-spacing: -1px;
-          color: var(--color-white-100);
-          text-transform: uppercase;
+            font-family: inherit;
+            font-size: 1.625rem;
+            font-weight: 600;
+            line-height: 1.5;
+            letter-spacing: -1px;
+            color: var(--color-white-100);
+            text-transform: uppercase;
+            margin-left: 2rem;
         }
         .menu {
           position: fixed;
@@ -209,22 +215,23 @@
           transition: all 0.3s ease;
         }
         .menu-block {
-          display: inline-block;
-          font-family: inherit;
-          font-size: 0.875rem;
-          font-weight: 500;
-          line-height: 1.25;
-          user-select: none;
-          white-space: nowrap;
-          text-align: center;
-          margin-left: auto;
-          padding: 0.65rem 1.5rem;
-          border-radius: 3rem;
-          text-transform: capitalize;
-          color: var(--color-white);
-          background-color: var(--color-blue-600);
-          box-shadow: var(--shadow-medium);
-          transition: all 0.3s ease-in-out;
+            display: inline-block;
+            font-family: inherit;
+            font-size: 0.875rem;
+            font-weight: 500;
+            line-height: 1.25;
+            user-select: none;
+            white-space: nowrap;
+            text-align: center;
+            margin-left: auto;
+            padding: 0.65rem 1.5rem;
+            border-radius: 3rem;
+            text-transform: capitalize;
+            color: var(--color-white);
+            background-color: var(--color-blue-600);
+            box-shadow: var(--shadow-medium);
+            margin-right: 2rem;
+            transition: all 0.3s ease-in-out;
         }
         @media only screen and (min-width: 48rem) {
           .menu {
@@ -384,11 +391,12 @@
 <p>2020年7月に膝の怪我（ACL）の手術。</p>
 <section id="education">
     <h2>学校歴</h2>
+    <div style="overflow-x: auto;">
     <table>
         <thead>
             <tr>
-                <th>年</th>
-                <th>月</th>
+                <th>始</th>
+                <th>終</th>
                 <th>学歴</th>
                 <th>学年</th>
                 <th>期間</th>
@@ -397,142 +405,96 @@
         </thead>
         <tbody>
             <tr>
-                <td>2009</td>
-                <td>4</td>
-                <td rowspan="2">世田谷幼児生活団</td>
-                <td>年少</td>
-                <td rowspan="2">1年ちょい</td>
-                <td rowspan="2">東京</td>
+                <td>2009年4月</td>
+                <td>2010年5月</td>
+                <td>世田谷幼児生活団</td>
+                <td>年少～年中</td>
+                <td>1年ちょい</td>
+                <td>東京</td>
             </tr>
             <tr>
-                <td>2010</td>
-                <td>5</td>
+                <td>2010年5月</td>
+                <td>2011年4月</td>
+                <td>砧幼稚園</td>
                 <td>年中</td>
+                <td>1年</td>
+                <td>東京</td>
             </tr>
             <tr>
-                <td>2010</td>
-                <td>5</td>
-                <td rowspan="2">砧幼稚園</td>
-                <td rowspan="2">年中</td>
-                <td rowspan="2">1年</td>
-                <td rowspan="2">東京</td>
+                <td>2011年5月</td>
+                <td>2012年3月</td>
+                <td>若草幼稚園</td>
+                <td>年長</td>
+                <td>1年</td>
+                <td>愛媛県</td>
             </tr>
             <tr>
-                <td>2011</td>
-                <td>4</td>
-            </tr>
-            <tr>
-                <td>2011</td>
-                <td>5</td>
-                <td rowspan="2">若草幼稚園</td>
-                <td rowspan="2">年長</td>
-                <td rowspan="2">1年</td>
-                <td rowspan="2">愛媛県</td>
-            </tr>
-            <tr>
-                <td>2012</td>
-                <td>3</td>
-            </tr>
-            <tr>
-                <td>2012</td>
-                <td>4</td>
-                <td rowspan="2">垣生小学校</td>
-                <td rowspan="2">1年生</td>
-                <td rowspan="2">2か月</td>
-                <td rowspan="2">愛媛県</td>
-            </tr>
-            <tr>
-                <td>2012</td>
-                <td>6</td>
-            </tr>
-            <tr>
-                <td>2012</td>
-                <td>6</td>
-                <td rowspan="2">日浦小学校</td>
+                <td>2012年4月</td>
+                <td>2012年6月</td>
+                <td>垣生小学校</td>
                 <td>1年生</td>
-                <td rowspan="2">4年半</td>
-                <td rowspan="2">愛媛県</td>
+                <td>2か月</td>
+                <td>愛媛県</td>
             </tr>
             <tr>
-                <td>2016</td>
-                <td>12</td>
-                <td>5年生</td>
+                <td>2012年6月</td>
+                <td>2016年12月</td>
+                <td>日浦小学校</td>
+                <td>1年生～5年生</td>
+                <td>4年半</td>
+                <td>愛媛県</td>
             </tr>
             <tr>
-                <td>2017</td>
-                <td>2</td>
-                <td rowspan="2">Balmoral Intermediate</td>
-                <td rowspan="2">Year 7</td>
-                <td rowspan="2">1年</td>
-                <td rowspan="2">ニュージーランド</td>
+                <td>2017年2月</td>
+                <td>2017年12月</td>
+                <td>Balmoral Intermediate</td>
+                <td>Year 7</td>
+                <td>1年</td>
+                <td>ニュージーランド</td>
             </tr>
             <tr>
-                <td>2017</td>
-                <td>12</td>
+                <td>2018年1月</td>
+                <td>2018年3月</td>
+                <td>日浦小学校</td>
+                <td>6年生</td>
+                <td>3か月</td>
+                <td>愛媛県</td>
             </tr>
             <tr>
-                <td>2018</td>
-                <td>1</td>
-                <td rowspan="2">日浦小学校</td>
-                <td rowspan="2">6年生</td>
-                <td rowspan="2">3か月</td>
-                <td rowspan="2">愛媛県</td>
+                <td>2018年4月</td>
+                <td>2018年7月</td>
+                <td>Takahari English School</td>
+                <td>-</td>
+                <td>3か月</td>
+                <td>フィリピン</td>
             </tr>
             <tr>
-                <td>2018</td>
-                <td>4</td>
+                <td>2018年7月</td>
+                <td>2018年7月</td>
+                <td>桑原中学校</td>
+                <td>1年生</td>
+                <td>2~3週間</td>
+                <td>愛媛県</td>
             </tr>
             <tr>
-                <td>2018</td>
-                <td>4</td>
-                <td rowspan="2">Takahari English School</td>
-                <td rowspan="2">-</td>
-                <td rowspan="2">3か月</td>
-                <td rowspan="2">フィリピン</td>
+                <td>2018年8月</td>
+                <td>2019年5月</td>
+                <td>Centre for International Education British School</td>
+                <td>Year 8</td>
+                <td>1年</td>
+                <td>フィリピン</td>
             </tr>
             <tr>
-                <td>2018</td>
-                <td>7</td>
-            </tr>
-            <tr>
-                <td>2017</td>
-                <td>7</td>
-                <td rowspan="2">桑原中学校</td>
-                <td rowspan="2">1年生</td>
-                <td rowspan="2">2~3週間</td>
-                <td rowspan="2">愛媛県</td>
-            </tr>
-            <tr>
-                <td>2017</td>
-                <td>7</td>
-            </tr>
-            <tr>
-                <td>2018</td>
-                <td>8</td>
-                <td rowspan="2">Centre for International Education British School</td>
-                <td rowspan="2">Year 8</td>
-                <td rowspan="2">1年</td>
-                <td rowspan="2">フィリピン</td>
-            </tr>
-            <tr>
-                <td>2019</td>
-                <td>5</td>
-            </tr>
-            <tr>
-                <td>2019</td>
-                <td>7</td>
-                <td rowspan="2">Westlake Boys High School</td>
-                <td>Year 9</td>
-                <td rowspan="2">5年</td>
-                <td rowspan="2">ニュージーランド</td>
-            </tr>
-            <tr>
-                <td>2023</td>
-                <td>12</td>
-                <td>Year 13</td>
+                <td>2019年8月</td>
+                <td>2023年12月</td>
+                <td>Westlake Boys High School （卒業予定）</td>
+                <td>Year 9～Year 13</td>
+                <td>5年</td>
+                <td>ニュージーランド</td>
             </tr>
         </tbody>
     </table>
+    </div>
 </section>
 <section id="subjects">
     <h3>学習している科目</h3>
@@ -546,9 +508,6 @@
         <li>物理 Level 2</li>
         <li>会計 Level 1~2</li>
         <li>英語 Level 1</li>
-            <ul>
-                <li>Level 2を落としてしまいました。</li>
-            </ul>
     </ul>
 </section>
 </main>
