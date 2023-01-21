@@ -14,6 +14,7 @@
           box-sizing: inherit;
           scroll-behavior: smooth;
         }
+
         body {
           font-family: "Rubik", sans-serif;
           font-size: clamp(1rem, 2vw, 1.125rem);
@@ -23,8 +24,16 @@
           background-color: var(--color-black-500);
         }
 
-        main {
-          overflow: hidden;
+        .language {
+            font-size: 3rem;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+        }
+
+        .language a:hover {
+            color: #2463eb !important;
+            transition: all 0.35s ease;
         }
 
         main {
@@ -53,7 +62,7 @@
         section#education tr:nth-child(even){background-color: #170f0f}
 
         section#education th {
-            background-color:green;
+            background-color: #2463eb;
         }
 
         section#education thead {
@@ -371,7 +380,6 @@
       </div>
       <div class="menu" id="menu">
          <ul class="menu-inner">
-            <li class="menu-item"><a href="#" class="menu-link">Home</a></li>
             <li class="menu-item"><a href="https://twitter.com/taroj1205" class="menu-link">Twitter</a></li>
          </ul>
       </div>
@@ -510,6 +518,11 @@
         <li>英語 Level 1</li>
     </ul>
 </section>
+<section id="links">
+    <h2>リンクなど</h2>
+    <h3>ブログ</h3>
+</section>
+<div class="language"><a href="en/index.html" title="" style="color: white; text-decoration: none; transition: all 0.35s ease;"><i class="fa-solid fa-globe"></i></a></div>
 </main>
 </body>
 <script>
