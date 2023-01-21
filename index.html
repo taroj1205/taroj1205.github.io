@@ -24,54 +24,41 @@
           background-color: var(--color-black-500);
         }
 
-        .language {
-            font-size: 3rem;
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-        }
-
-        .language a:hover {
-            color: #2463eb !important;
-            transition: all 0.35s ease;
-        }
-
         main {
-            max-width: 1000px;
+            width: 1100px;
             margin-top: auto;
             margin-left: auto;
             margin-right: auto;
             font-family: 'Yu Gothic UI';
+            margin-top: 68px;
+            overflow: hidden;
         }
 
         main a {
             color: #8ab4f8;
         }
 
-        section#education table {
+        .education table {
             position: relative;
-            width: 950px;
+            width: 1100px;
+
         }
 
-        section#education table, th, td {
+        .education table, th, td {
             border: 1px solid gray;
             border-collapse: collapse;
-            padding: 0.25rem;
+            padding-top: 0.25rem;
+            padding-bottom: 0.25rem;
         }
 
-        section#education tr:nth-child(even){background-color: #170f0f}
+        .education tr:nth-child(even){background-color: #170f0f}
 
-        section#education th {
+        .education th {
             background-color: #2463eb;
         }
 
-        section#education thead {
+        .education thead {
             text-align: center;
-        }
-
-        main {
-          margin-top: 68px;
-          overflow: hidden;
         }
 
         /* -----NAVBAR------ */
@@ -120,40 +107,6 @@
           height: auto;
           margin: 0 auto;
           padding: 0 1.25rem;
-        }
-
-        .heading-xl {
-          font-family: inherit;
-          font-size: clamp(2.648rem, 6vw, 4.241rem);
-          font-weight: 700;
-          line-height: 1.15;
-          letter-spacing: -1px;
-        }
-        .heading-lg {
-          font-family: inherit;
-          font-size: clamp(2.179rem, 5vw, 3.176rem);
-          font-weight: 700;
-          line-height: 1.15;
-          letter-spacing: -1px;
-        }
-        .heading-md {
-          font-family: inherit;
-          font-size: clamp(1.794rem, 4vw, 2.379rem);
-          font-weight: 700;
-          line-height: 1.25;
-          letter-spacing: -1px;
-        }
-        .heading-sm {
-          font-family: inherit;
-          font-size: clamp(1.476rem, 3vw, 1.782rem);
-          font-weight: 600;
-          line-height: 1.5;
-        }
-        .heading-xs {
-          font-family: inherit;
-          font-size: clamp(1.215rem, 2vw, 1.335rem);
-          font-weight: 500;
-          line-height: 1.5;
         }
 
         .header {
@@ -236,7 +189,7 @@
             padding: 0.65rem 1.5rem;
             border-radius: 3rem;
             text-transform: capitalize;
-            color: var(--color-white);
+            color: var(--color-white-100);
             background-color: var(--color-blue-600);
             box-shadow: var(--shadow-medium);
             margin-right: 2rem;
@@ -325,7 +278,7 @@
         }
 
         .banner-links {
-          position: sticky;
+          position: fixed;
           top: 30%;
           right: 1.5rem;
           display: grid;
@@ -335,7 +288,7 @@
           visibility: hidden;
           float: right;
         }
-        @media only screen and (min-width: 64rem) {
+        @media only screen and (min-width: 1200px) {
           .banner-links {
             opacity: 1;
             visibility: visible;
@@ -364,166 +317,440 @@
           transform: rotate(90deg);
           background: var(--color-white-100);
         }
+        .switch {
+            position: fixed;
+            display: inline-block;
+            margin: 0 5px;
+            bottom: 5px;
+            right: 0;
+        }
 
+        .switch > span {
+            position: absolute;
+            top: 11px;
+            pointer-events: none;
+            font-family: 'Helvetica', Arial, sans-serif;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            text-shadow: 0 1px 0 rgba(0, 0, 0, .06);
+            width: 50%;
+            text-align: center;
+        }
 
+        input.check-toggle-round-flat:checked ~ .off {
+            color: #F36F25;
+        }
+
+        input.check-toggle-round-flat:checked ~ .on {
+            color: #fff;
+        }
+
+        .switch > span.on {
+            left: 0;
+            padding-left: 2px;
+            color: #F36F25;
+        }
+
+        .switch > span.off {
+            right: 0;
+            padding-right: 4px;
+            color: #fff;
+        }
+
+        .check-toggle {
+          position: absolute;
+          margin-left: -9999px;
+          visibility: hidden;
+        }
+        .check-toggle + label {
+          display: block;
+          position: relative;
+          cursor: pointer;
+          outline: none;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+
+        input.check-toggle-round-flat + label {
+          padding: 2px;
+          width: 97px;
+          height: 35px;
+          background-color: #F36F25;
+          -webkit-border-radius: 60px;
+          -moz-border-radius: 60px;
+          -ms-border-radius: 60px;
+          -o-border-radius: 60px;
+          border-radius: 60px;
+        }
+        input.check-toggle-round-flat + label:before, input.check-toggle-round-flat + label:after {
+          display: block;
+          position: absolute;
+          content: "";
+        }
+
+        input.check-toggle-round-flat + label:before {
+          top: 2px;
+          left: 2px;
+          bottom: 2px;
+          right: 2px;
+          background-color: #F36F25;
+          -webkit-border-radius: 60px;
+          -moz-border-radius: 60px;
+          -ms-border-radius: 60px;
+          -o-border-radius: 60px;
+          border-radius: 60px;
+        }
+        input.check-toggle-round-flat + label:after {
+          top: 4px;
+          left: 4px;
+          bottom: 4px;
+          width: 48px;
+          background-color: #fff;
+          -webkit-border-radius: 52px;
+          -moz-border-radius: 52px;
+          -ms-border-radius: 52px;
+          -o-border-radius: 52px;
+          border-radius: 52px;
+          -webkit-transition: margin 0.2s;
+          -moz-transition: margin 0.2s;
+          -o-transition: margin 0.2s;
+          transition: margin 0.2s;
+        }
+
+        input.check-toggle-round-flat:checked + label {
+        }
+
+        input.check-toggle-round-flat:checked + label:after {
+          margin-left: 44px;
+        }
+
+        #ja_content {
+            display: block;
+        }
+        #ja_to {
+            display: block;
+            width: 100px;
+        }
+        #en_content {
+            display: none;
+        }
+        #en_to {
+            display: none;
+            width: 100px;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 3px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
     </style>
 </head>
 <body>
-<!-- Header Section -->
-<header class="header" id="header">
-   <nav class="navbar container">
-      <a href="index.html" class="header_aboutme">taroj1205</a>
-      <div class="burger" id="burger">
-         <span class="burger-line"></span>
-         <span class="burger-line"></span>
-         <span class="burger-line"></span>
-      </div>
-      <div class="menu" id="menu">
-         <ul class="menu-inner">
-            <li class="menu-item"><a href="https://twitter.com/taroj1205" class="menu-link">Twitter</a></li>
-         </ul>
-      </div>
-      <a href="https://taroj1205.hatenablog.com" class="menu-block">ブログへ</a>
-   </nav>
-</header>
-<div class="banner-links">
-   <a href="https://facebook.com/taroj1205" title=""><i class="bx bxl-facebook"></i></a>
-   <a href="https://instagram.com/taroj1205" title=""><i class="bx bxl-instagram"></i></a>
-   <a href="https://taroj1205.twitter.com" title=""><i class="bx bxl-twitter"></i></a>
-   <a href="https://www.youtube.com/@user-le6xc5nx5k" title=""><i class="bx bxl-youtube"></i></a>
-</div>
-<main>
-<h1>僕について</h1>
-<p>2005年12月05日生まれ。東京出身。2011年の震災の後愛媛に引っ越した。</p>
-<h2>重要な出来事など</h2>
-<p>2020年7月に膝の怪我（ACL）の手術。</p>
-<section id="education">
-    <h2>学校歴</h2>
-    <div style="overflow-x: auto;">
-    <table>
-        <thead>
-            <tr>
-                <th>始</th>
-                <th>終</th>
-                <th>学歴</th>
-                <th>学年</th>
-                <th>期間</th>
-                <th>場所</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>2009年4月</td>
-                <td>2010年5月</td>
-                <td>世田谷幼児生活団</td>
-                <td>年少～年中</td>
-                <td>1年ちょい</td>
-                <td>東京</td>
-            </tr>
-            <tr>
-                <td>2010年5月</td>
-                <td>2011年4月</td>
-                <td>砧幼稚園</td>
-                <td>年中</td>
-                <td>1年</td>
-                <td>東京</td>
-            </tr>
-            <tr>
-                <td>2011年5月</td>
-                <td>2012年3月</td>
-                <td>若草幼稚園</td>
-                <td>年長</td>
-                <td>1年</td>
-                <td>愛媛県</td>
-            </tr>
-            <tr>
-                <td>2012年4月</td>
-                <td>2012年6月</td>
-                <td>垣生小学校</td>
-                <td>1年生</td>
-                <td>2か月</td>
-                <td>愛媛県</td>
-            </tr>
-            <tr>
-                <td>2012年6月</td>
-                <td>2016年12月</td>
-                <td>日浦小学校</td>
-                <td>1年生～5年生</td>
-                <td>4年半</td>
-                <td>愛媛県</td>
-            </tr>
-            <tr>
-                <td>2017年2月</td>
-                <td>2017年12月</td>
-                <td>Balmoral Intermediate</td>
-                <td>Year 7</td>
-                <td>1年</td>
-                <td>ニュージーランド</td>
-            </tr>
-            <tr>
-                <td>2018年1月</td>
-                <td>2018年3月</td>
-                <td>日浦小学校</td>
-                <td>6年生</td>
-                <td>3か月</td>
-                <td>愛媛県</td>
-            </tr>
-            <tr>
-                <td>2018年4月</td>
-                <td>2018年7月</td>
-                <td>Takahari English School</td>
-                <td>-</td>
-                <td>3か月</td>
-                <td>フィリピン</td>
-            </tr>
-            <tr>
-                <td>2018年7月</td>
-                <td>2018年7月</td>
-                <td>桑原中学校</td>
-                <td>1年生</td>
-                <td>2~3週間</td>
-                <td>愛媛県</td>
-            </tr>
-            <tr>
-                <td>2018年8月</td>
-                <td>2019年5月</td>
-                <td>Centre for International Education British School</td>
-                <td>Year 8</td>
-                <td>1年</td>
-                <td>フィリピン</td>
-            </tr>
-            <tr>
-                <td>2019年8月</td>
-                <td>2023年12月</td>
-                <td>Westlake Boys High School （卒業予定）</td>
-                <td>Year 9～Year 13</td>
-                <td>5年</td>
-                <td>ニュージーランド</td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- Header Section -->
+    <header class="header" id="header">
+       <nav class="navbar container">
+          <a href="index.html" class="header_aboutme">taroj1205</a>
+          <div class="burger" id="burger">
+             <span class="burger-line"></span>
+             <span class="burger-line"></span>
+             <span class="burger-line"></span>
+          </div>
+          <div class="menu" id="menu">
+             <ul class="menu-inner">
+                <li class="menu-item"><a href="https://twitter.com/taroj1205" class="menu-link">Twitter</a></li>
+             </ul>
+          </div>
+          <a href="https://taroj1205.hatenablog.com" class="menu-block" id="ja_to">ブログ</a>
+          <a href="https://taroj1205.hatenablog.com" class="menu-block" id="en_to">Blog</a>
+       </nav>
+    </header>
+    <div class="banner-links">
+       <a href="https://facebook.com/taroj1205" title=""><i class="bx bxl-facebook"></i></a>
+       <a href="https://instagram.com/taroj1205" title=""><i class="bx bxl-instagram"></i></a>
+       <a href="https://taroj1205.twitter.com" title=""><i class="bx bxl-twitter"></i></a>
+       <a href="https://www.youtube.com/@user-le6xc5nx5k" title=""><i class="bx bxl-youtube"></i></a>
     </div>
-</section>
-<section id="subjects">
-    <h3>学習している科目</h3>
-    <p>Westlakeはニュージーランドの<a href="https://www.nzqa.govt.nz/ncea/" target="_blank" rel="noreferrer">NCEA <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:smaller;"></i></a>というシステムを導入しています。</p>
-    <ul>
-        <li>数学 Level 1~2</li>
-        <li>統計 Level 1~2</li>
-        <li>スペイン語 Level 1</li>
-        <li>日本語 Level 2</li>
-        <li>理科（物理、生物学、化学） Level 1</li>
-        <li>物理 Level 2</li>
-        <li>会計 Level 1~2</li>
-        <li>英語 Level 1</li>
-    </ul>
-</section>
-<section id="links">
-    <h2>リンクなど</h2>
-    <h3>ブログ</h3>
-</section>
-<div class="language"><a href="en/index.html" title="" style="color: white; text-decoration: none; transition: all 0.35s ease;"><i class="fa-solid fa-globe"></i></a></div>
-</main>
+    <main>
+    <div id="ja_content">
+        <h1>僕について</h1>
+        <p>2005年12月05日生まれ。東京出身。2011年の震災の後愛媛に引っ越した。</p>
+        <h2>重要な出来事など</h2>
+        <p>2020年7月に膝の怪我（ACL）の手術。</p>
+        <section class="education">
+            <h2>学校歴</h2>
+            <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>始</th>
+                        <th>終</th>
+                        <th>学校名</th>
+                        <th>学年</th>
+                        <th>期間</th>
+                        <th>国</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2009年4月</td>
+                        <td>2010年5月</td>
+                        <td>世田谷幼児生活団</td>
+                        <td>年少～年中</td>
+                        <td>1年ちょい</td>
+                        <td>東京</td>
+                    </tr>
+                    <tr>
+                        <td>2010年5月</td>
+                        <td>2011年4月</td>
+                        <td>砧幼稚園</td>
+                        <td>年中</td>
+                        <td>1年</td>
+                        <td>東京</td>
+                    </tr>
+                    <tr>
+                        <td>2011年5月</td>
+                        <td>2012年3月</td>
+                        <td>若草幼稚園</td>
+                        <td>年長</td>
+                        <td>1年</td>
+                        <td>愛媛県</td>
+                    </tr>
+                    <tr>
+                        <td>2012年4月</td>
+                        <td>2012年6月</td>
+                        <td>垣生小学校</td>
+                        <td>1年生</td>
+                        <td>2か月</td>
+                        <td>愛媛県</td>
+                    </tr>
+                    <tr>
+                        <td>2012年6月</td>
+                        <td>2016年12月</td>
+                        <td>日浦小学校</td>
+                        <td>1年生～5年生</td>
+                        <td>4年半</td>
+                        <td>愛媛県</td>
+                    </tr>
+                    <tr>
+                        <td>2017年2月</td>
+                        <td>2017年12月</td>
+                        <td>Balmoral Intermediate</td>
+                        <td>Year 7</td>
+                        <td>1年</td>
+                        <td>ニュージーランド</td>
+                    </tr>
+                    <tr>
+                        <td>2018年1月</td>
+                        <td>2018年3月</td>
+                        <td>日浦小学校</td>
+                        <td>6年生</td>
+                        <td>3か月</td>
+                        <td>愛媛県</td>
+                    </tr>
+                    <tr>
+                        <td>2018年4月</td>
+                        <td>2018年7月</td>
+                        <td>Takahari English School</td>
+                        <td>-</td>
+                        <td>3か月</td>
+                        <td>フィリピン</td>
+                    </tr>
+                    <tr>
+                        <td>2018年7月</td>
+                        <td>2018年7月</td>
+                        <td>桑原中学校</td>
+                        <td>1年生</td>
+                        <td>2~3週間</td>
+                        <td>愛媛県</td>
+                    </tr>
+                    <tr>
+                        <td>2018年8月</td>
+                        <td>2019年5月</td>
+                        <td><div style="overflow-x: auto;">Centre for International Education British School</div></td>
+                        <td>Year 8</td>
+                        <td>1年</td>
+                        <td>フィリピン</td>
+                    </tr>
+                    <tr>
+                        <td>2019年8月</td>
+                        <td>2023年12月</td>
+                        <td>Westlake Boys High School （卒業予定）</td>
+                        <td>Year 9～Year 13</td>
+                        <td>5年</td>
+                        <td>ニュージーランド</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </section>
+        <section class="subjects">
+            <h3>学習している科目</h3>
+            <p>Westlakeはニュージーランドの<a href="https://www.nzqa.govt.nz/ncea/" target="_blank" rel="noreferrer">NCEA <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:smaller;"></i></a>というシステムを導入しています。</p>
+            <ul>
+                <li>数学 Level 1~2</li>
+                <li>統計 Level 1~2</li>
+                <li>会計 Level 1~2</li>
+                <li>物理 Level 2</li>
+                <li>英語 Level 1</li>
+                <li>日本語 Level 2</li>
+                <li>スペイン語 Level 1</li>
+                <li>理科（物理、生物学、化学） Level 1</li>
+            </ul>
+        </section>
+        <section class="links">
+            <h2>リンクなど</h2>
+            <h3>ブログ</h3>
+        </section>
+    </div>
+    <div id="en_content">
+        <h1>About me</h1>
+        <p>Born on December 5, 2005. From Tokyo. Moved to Ehime after the 2011 earthquake.</p>
+        <h2>Important events</h2>
+        <p>Underwent surgery for an ACL injury on the knee in July 2020.</p>
+        <section class="education">
+            <h2>Academy Background</h2>
+            <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Name</th>
+                        <th>Year Level</th>
+                        <th>Period</th>
+                        <th>Country</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>04/2009</td>
+                        <td>05/2010</td>
+                        <td>Tokyotomonokaisetagaya Infant Life Group</td>
+                        <td>First and Second Year of Kindergarten</td>
+                        <td>Approx. a year</td>
+                        <td>Tokyo</td>
+                    </tr>
+                    <tr>
+                        <td>05/2010</td>
+                        <td>04/2011</td>
+                        <td>Kinuta Kindergarten</td>
+                        <td>Second Year of Kindergarten</td>
+                        <td>A year</td>
+                        <td>Tokyo</td>
+                    </tr>
+                    <tr>
+                        <td>05/2011</td>
+                        <td>03/2012</td>
+                        <td>Wakakusa Kindergarten</td>
+                        <td>Last (3rd) year of Kindergarten</td>
+                        <td>A year</td>
+                        <td>Ehime</td>
+                    </tr>
+                    <tr>
+                        <td>04/2012</td>
+                        <td>06/2012</td>
+                        <td>Habu Elementary School</td>
+                        <td>Year 1</td>
+                        <td>2 months</td>
+                        <td>Ehime</td>
+                    </tr>
+                    <tr>
+                        <td>06/2012</td>
+                        <td>12/2016</td>
+                        <td>Hiura Elementary School</td>
+                        <td>Year 1 to Year 5</td>
+                        <td>4.5 years</td>
+                        <td>Ehime</td>
+                    </tr>
+                    <tr>
+                        <td>02/2017</td>
+                        <td>12/2017</td>
+                        <td>Balmoral Intermediate</td>
+                        <td>Year 7</td>
+                        <td>A year</td>
+                        <td>New Zealand</td>
+                    </tr>
+                    <tr>
+                        <td>01/2018</td>
+                        <td>03/2018</td>
+                        <td>Hiura Elementary School</td>
+                        <td>Year 6</td>
+                        <td>3 months</td>
+                        <td>Ehime</td>
+                    </tr>
+                    <tr>
+                        <td>04/2018</td>
+                        <td>07/2018</td>
+                        <td>Takahari English School</td>
+                        <td>-</td>
+                        <td>3 months</td>
+                        <td>The Philippines</td>
+                    </tr>
+                    <tr>
+                        <td>07/2018</td>
+                        <td>07/2018</td>
+                        <td>Kuwabara Junior High School</td>
+                        <td>Year 7</td>
+                        <td>2 to 3 Weeks</td>
+                        <td>Ehime</td>
+                    </tr>
+                    <tr>
+                        <td>08/2018</td>
+                        <td>05/2019</td>
+                        <td>Centre for International Education British School</td>
+                        <td>Year 8</td>
+                        <td>A year</td>
+                        <td>The Philippines</td>
+                    </tr>
+                    <tr>
+                        <td>08/2019</td>
+                        <td>12/2023</td>
+                        <td style="width: 400px;"><div style="overflow-x: auto; white-space: nowrap; width: 400px;">Westlake Boys High School (Anticipated Graduation Date)</div></td>
+                        <td>Year 9～Year 13</td>
+                        <td>~5 Years</td>
+                        <td>New Zealand</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </section>
+        <section class="subjects">
+            <h3>Subjects I've done</h3>
+            <p>Westlakeはニュージーランドの<a href="https://www.nzqa.govt.nz/ncea/" target="_blank" rel="noreferrer">NCEA <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:smaller;"></i></a>というシステムを導入しています。</p>
+            <ul>
+                <li>Calculus Level 1~2</li>
+                <li>Statics Level 1~2</li>
+                <li>Accounting Level 1~2</li>
+                <li>Physics Level 2</li>
+                <li>English Level 1</li>
+                <li>Japanese Level 2</li>
+                <li>Spanish Level 1</li>
+                <li>Science（Physics, Biology, Chemistry） Level 1</li>
+            </ul>
+        </section>
+        <section class="links">
+            <h2>Links</h2>
+            <h3>Blog</h3>
+        </section>
+    </div>
+    </main>
+    <div class="switch">
+        <input id="language-toggle" class="check-toggle check-toggle-round-flat" type="checkbox">
+        <label for="language-toggle"></label>
+        <span class="on">JA</span>
+        <span class="off">EN</span>
+    </div>
 </body>
 <script>
 const navbarMenu = document.getElementById("menu");
@@ -554,5 +781,18 @@ window.addEventListener("scroll", () => {
       headerMenu.classList.remove("on-scroll");
    }
 });
+
+let jaContent = document.querySelector('#ja_content');
+let enContent = document.querySelector('#en_content');
+let jaTo = document.querySelector('#ja_to');
+let enTo = document.querySelector('#en_to');
+
+document.querySelector('.switch input').addEventListener('change', e => {
+    jaContent.style.display = e.target.checked ? 'none' : 'block';
+    enContent.style.display = e.target.checked ? 'block' : 'none';
+    jaTo.style.display = e.target.checked ? 'none' : 'block';
+    enTo.style.display = e.target.checked ? 'block' : 'none';
+});
+
 </script>
 </html>
