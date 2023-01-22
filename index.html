@@ -25,13 +25,26 @@
         }
 
         main {
-            margin-top: auto;
             margin-left: auto;
             margin-right: auto;
             font-family: 'Yu Gothic UI';
-            margin-top: 68px;
             overflow: hidden;
         }
+        h1, .pfp {
+            padding-top: 50px;
+        }
+
+        .pfp {
+            height: 20%;
+            width:20%;
+            display: block;
+            float: right;
+            transition: all 0.35s ease;
+        }
+
+        @media only screen and (max-width: 250px) {.pfp {display:none;}}
+        @media only screen and (max-width: 1270px) {.pfp {margin-right: 50px;}}
+        @media only screen and (min-width: 1270px) {.pfp {margin-right: 100px;}}
 
         main a {
             color: #8ab4f8;
@@ -480,8 +493,9 @@
        <a href="https://taroj1205.twitter.com" title=""><i class="bx bxl-twitter"></i></a>
        <a href="https://www.youtube.com/@user-le6xc5nx5k" title=""><i class="bx bxl-youtube"></i></a>
     </div>
-    <main>
+    <main class="container">
     <div id="ja_content">
+        <img class="pfp" src="https://lh3.googleusercontent.com/hAY8Wt7Av-ahuHPgV356Xr_Q7D9xExvVOcrAvfmOGEO6xBigLPv7FMHKA1b8ggqD9q3MqcpTEmZ73nHb9_qZ1mM7o_ZK0GaZ-tDrSQIksZ0iUWvbtWMq7IwSLrDxddKnWAmR6Ya7TWXB_UM8mQD2c1aRjN36Ee5rGKx9n-HC1xvZN0EVMlMDa4aw0an1WvlJi0VB7Nwq6aPj1SLvF8XCoV3rIupzdoOIEuU3sMhq_oEidHjDawf5ClJNF1w9Rf8hhv-pfEALt-pRbrQQIFe0lpiBZgnsXmO-kqoGVLW96KWszZx94t30nGUWMduckjXraVc2zp-i0--IQ-u8kVHRwuKlwm61ZBq7DQpP7A1msgNt-ela626ytI-ypkwqbMyJRjrYvExciWOxC6-DGTvcfQmCf2Q95pN8VK-MVJvp9yJesoL78Ry2blZPEbC2AX0-hwM0R8p1IWOfrOarlmU76FYaQPCg9kwjObpM9U_QqsHDuhnS-ZaZdbezt_BeqONs7xTNJ2OcQgRtq9xG8mYwfoElxJP-OPear5AkW2eCqzzwL3z380AKfW4ZrbiSLKOM59eKVykTS-jho9TA32NkPkZmaxcfIRyP8zPiNKLeVrlrULr3sDnkNn3svKezAzIjMWcbBC0gPgySuWv9kt6Jti2gzBNiKiz8-MKRNM04rFBOYliwfMtMj_AlgTUYTZosk4wdhLT5FIvdajDJVmeXVD9zOw4fK2lxvQ7u6_er1lf2i-CTlzME3pyQ45U6sMLVfjxlgOFu87OZ4zkS6ohpplVQGznoRkNtA0Ht-70nIJXn6KMFwHg4e2Acw9jCGb9HLkmndZxhtguAjSO0POFJyeJiQ6IhEvZ3w6OZi8_PHS-CRLSpixUo-Ldkl8hEB8TApzJA0jzpaLc7tgvAcK-4X9tz4npwmfM76udWXWKzQgkovQ=s409-no?authuser=0">
         <h1>僕について</h1>
         <p>2005年12月05日生まれ。東京出身。2011年の震災の後愛媛に引っ越した。</p>
         <h2>重要な出来事など</h2>
@@ -613,6 +627,7 @@
         </section>
     </div>
     <div id="en_content">
+        <img class="pfp" src="https://lh3.googleusercontent.com/hAY8Wt7Av-ahuHPgV356Xr_Q7D9xExvVOcrAvfmOGEO6xBigLPv7FMHKA1b8ggqD9q3MqcpTEmZ73nHb9_qZ1mM7o_ZK0GaZ-tDrSQIksZ0iUWvbtWMq7IwSLrDxddKnWAmR6Ya7TWXB_UM8mQD2c1aRjN36Ee5rGKx9n-HC1xvZN0EVMlMDa4aw0an1WvlJi0VB7Nwq6aPj1SLvF8XCoV3rIupzdoOIEuU3sMhq_oEidHjDawf5ClJNF1w9Rf8hhv-pfEALt-pRbrQQIFe0lpiBZgnsXmO-kqoGVLW96KWszZx94t30nGUWMduckjXraVc2zp-i0--IQ-u8kVHRwuKlwm61ZBq7DQpP7A1msgNt-ela626ytI-ypkwqbMyJRjrYvExciWOxC6-DGTvcfQmCf2Q95pN8VK-MVJvp9yJesoL78Ry2blZPEbC2AX0-hwM0R8p1IWOfrOarlmU76FYaQPCg9kwjObpM9U_QqsHDuhnS-ZaZdbezt_BeqONs7xTNJ2OcQgRtq9xG8mYwfoElxJP-OPear5AkW2eCqzzwL3z380AKfW4ZrbiSLKOM59eKVykTS-jho9TA32NkPkZmaxcfIRyP8zPiNKLeVrlrULr3sDnkNn3svKezAzIjMWcbBC0gPgySuWv9kt6Jti2gzBNiKiz8-MKRNM04rFBOYliwfMtMj_AlgTUYTZosk4wdhLT5FIvdajDJVmeXVD9zOw4fK2lxvQ7u6_er1lf2i-CTlzME3pyQ45U6sMLVfjxlgOFu87OZ4zkS6ohpplVQGznoRkNtA0Ht-70nIJXn6KMFwHg4e2Acw9jCGb9HLkmndZxhtguAjSO0POFJyeJiQ6IhEvZ3w6OZi8_PHS-CRLSpixUo-Ldkl8hEB8TApzJA0jzpaLc7tgvAcK-4X9tz4npwmfM76udWXWKzQgkovQ=s409-no?authuser=0">
         <h1>About me</h1>
         <p>Born on December 5, 2005. From Tokyo. Moved to Ehime after the 2011 earthquake.</p>
         <h2>Important events</h2>
