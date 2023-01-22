@@ -204,9 +204,11 @@
             color: var(--color-white-100);
             background-color: var(--color-blue-600);
             box-shadow: var(--shadow-medium);
-            margin-right: 9rem;
+            margin-right: 2rem;
             transition: all 0.3s ease-in-out;
         }
+        @media only screen and (max-width: 375px) {.header_aboutme {display:none;}}
+        @media only screen and (max-width: 185px) {nav, .switch {zoom: 80%;}}
         @media only screen and (min-width: 48rem) {
           .menu {
             position: relative;
@@ -251,6 +253,9 @@
           .burger {
             display: none;
             visibility: hidden;
+          }
+          #ja_to, #en_to {
+            margin-right: 9rem;
           }
         }
         .burger-line {
