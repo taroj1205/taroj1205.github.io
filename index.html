@@ -941,17 +941,37 @@
         }
     });
 
-    let jaContent = document.querySelector('#ja_content');
-    let enContent = document.querySelector('#en_content');
-    let jaTo = document.querySelector('#ja_to');
-    let enTo = document.querySelector('#en_to');
 
-    document.querySelector('.switch input').addEventListener('change', e => {
-        jaContent.style.display = e.target.checked ? 'none' : 'block';
-        enContent.style.display = e.target.checked ? 'block' : 'none';
-        jaTo.style.display = e.target.checked ? 'none' : 'block';
-        enTo.style.display = e.target.checked ? 'block' : 'none';
-    });
+let jaContent = document.querySelector('#ja_content');
+let enContent = document.querySelector('#en_content');
+let jaTo = document.querySelector('#ja_to');
+let enTo = document.querySelector('#en_to');
+
+window.onload = function() {
+  var switchEl = document.querySelector('.switch input');
+  var language = navigator.language || navigator.languages[0];
+  if (language === "ja") {
+    switchEl.checked = false;
+    jaContent.style.display = 'block';
+    enContent.style.display = 'none';
+    jaTo.style.display = 'block';
+    enTo.style.display = 'none';
+  } else {
+    switchEl.checked = true;
+    jaContent.style.display = 'none';
+    enContent.style.display = 'block';
+    jaTo.style.display = 'none';
+    enTo.style.display = 'block';
+  }
+  switchEl.addEventListener('change', e => {
+    jaContent.style.display = e.target.checked ? 'none' : 'block';
+    enContent.style.display = e.target.checked ? 'block' : 'none';
+    jaTo.style.display = e.target.checked ? 'none' : 'block';
+    enTo.style.display = e.target.checked ? 'block' : 'none';
+  });
+}
+
+
 
 </script>
 </html>
