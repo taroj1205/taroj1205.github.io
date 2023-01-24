@@ -33,6 +33,9 @@ h1, .pfp {
     position: relative;
 }
 
+.fa-external-link-alt {
+    font-size:smaller;
+}
 
 .pfp {
     height: 20%;
