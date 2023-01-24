@@ -33,10 +33,16 @@ h1, .pfp {
     position: relative;
 }
 
-main a[target="_blank"]:after{
+#en_content a[target="_blank"]:after {
     content: " \f35d";
-    font-family:fontawesome;
-    font-size:smaller;
+    font-family: fontawesome;
+    font-size: smaller;
+}
+
+#ja_content a[target="_blank"]:after {
+    content: " \f35d";
+    font-family: fontawesome;
+    font-size: smaller;
 }
 
 .pfp {
