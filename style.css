@@ -33,7 +33,9 @@ h1, .pfp {
     position: relative;
 }
 
-.fa-external-link-alt {
+main a[target="_blank"]after{
+    content: " \f35d";
+    font-family:fontawesome;
     font-size:smaller;
 }
 
