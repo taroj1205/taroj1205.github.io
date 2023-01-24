@@ -186,16 +186,6 @@ header .menu-block:hover {
     transition: all 0.35s ease;
 }
 
-header a[href*="github.com"]:hover {
-    background-color: #333;
-    transition: all 0.35s ease;
-}
-
-header a[href*="twitter.com"]:hover {
-    background-color: #1da1f2;
-    transition: all 0.35s ease;
-}
-
 header a[href*="github.com"]:hover:before {
     content: '\f09b';
     font-family: fontawesome;
