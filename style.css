@@ -33,7 +33,7 @@ h1, .pfp {
     position: relative;
 }
 
-main a[target="_blank"]after{
+main a[target="_blank"]:after{
     content: " \f35d";
     font-family:fontawesome;
     font-size:smaller;
