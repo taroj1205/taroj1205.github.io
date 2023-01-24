@@ -34,7 +34,7 @@ h1, .pfp {
 }
 
 #en_content a[target="_blank"]:after {
-    content: " \f35d";
+    content: "  \f35d";
     font-family: fontawesome;
     font-size: smaller;
 }
@@ -42,7 +42,7 @@ h1, .pfp {
 #ja_content a[target="_blank"]:after {
     content: " \f35d";
     font-family: fontawesome;
-    font-size: smaller;
+    font-size: 70%;
 }
 
 .pfp {
@@ -76,31 +76,47 @@ main a {
 }
 
 .education table {
-    position: relative;
+    border-collapse: collapse;
+    font-size: 0.9em;
     width: 1100px;
-
+    text-align: left;
+    white-space: nowrap;
+    transition: all 0.25s ease;
 }
 
-.education table, th, td {
-    border: 1px solid gray;
-    border-collapse: collapse;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
+.education table:hover {
+    box-shadow: 5px 10px 8px rgba(0, 0, 0);
+    transition: all 0.35s ease;
+}
+
+.education th, .education td {
+    padding: 12px;
+}
+
+.education th:first-child {
+    border-radius: 10px 0 0 0;
+}
+.education th:last-child {
+    border-radius: 0 10px 0 0;
 }
 
 .education tr:nth-child(even) {
-    background-color: #170f0f
+    background-color: #170f0f;
 }
 .education tr:nth-child(odd) {
     background-color: #080a0c;
 }
 
 .education th {
-    background-color: #2463eb;
+    background-color: #009879;
 }
 
-.education thead {
-    text-align: center;
+.education tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.education tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
 }
 
 /* -----NAVBAR------ */
@@ -143,6 +159,63 @@ header a, header ul {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+}
+
+header .menu-block, header .menu-link {
+    transition: all 0.35s ease;
+}
+
+.menu-link {
+    display: inline-block;
+    position: relative;
+    font-weight: 500;
+    margin-left: auto;
+    padding: 0.65rem 1.5rem;
+    border-radius: 3rem;
+    color: var(--color-white-100);
+    margin-right: 2rem;
+    font-size: 0.95rem;
+}
+
+header a {
+    position: relative;
+}
+
+header .menu-block:hover {
+    box-shadow: 5px 10px 8px rgba(0, 0, 0);
+    transition: all 0.35s ease;
+}
+
+header a[href*="github.com"]:hover {
+    background-color: #333;
+    transition: all 0.35s ease;
+}
+
+header a[href*="twitter.com"]:hover {
+    background-color: #1da1f2;
+    transition: all 0.35s ease;
+}
+
+header a[href*="github.com"]:hover:before {
+    content: '\f09b';
+    font-family: fontawesome;
+    transition: all 0.35s ease;
+    position:absolute;
+    left: 4px;
+}
+
+header a[href*="twitter.com"]:hover:before {
+    content: '\f081';
+    font-family: fontawesome;
+    transition: all 0.35s ease;
+    position:absolute;
+    left: 4px;
+}
+
+header a[href*="hatenablog.com"]:hover:after {
+    content: ' \f35d';
+    font-family: fontawesome;
+    transition: all 0.35s ease;
 }
 
 .container {
@@ -201,6 +274,7 @@ header a, header ul {
     background-color: var(--color-black-300);
     box-shadow: var(--shadow-medium);
     transition: all 0.4s ease-in-out;
+    user-select: none;
 }
 
 .menu.is-active {
@@ -215,16 +289,6 @@ header a, header ul {
     justify-content: center;
     align-items: center;
     row-gap: 1.25rem;
-}
-
-.menu-link {
-    font-family: inherit;
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1.5;
-    color: var(--color-white-100);
-    text-transform: uppercase;
-    transition: all 0.3s ease;
 }
 
 .menu-block {
