@@ -50,7 +50,6 @@ h1, .pfp {
 .projects img {
     max-width: 95%;
     display: block;
-
 }
 
 @media only screen and (max-width: 250px) {
