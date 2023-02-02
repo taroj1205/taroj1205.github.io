@@ -33,16 +33,10 @@ h1, .pfp {
     position: relative;
 }
 
-#en_content a[target="_blank"]:after {
+#en_content a[target="_blank"]:after, #ja_content a[target="_blank"]:after {
     content: "  \f35d";
     font-family: fontawesome;
     font-size: smaller;
-}
-
-#ja_content a[target="_blank"]:after {
-    content: " \f35d";
-    font-family: fontawesome;
-    font-size: 70%;
 }
 
 .pfp {
@@ -51,6 +45,12 @@ h1, .pfp {
     display: block;
     float: right;
     transition: all 0.35s ease;
+}
+
+.projects img {
+    max-width: 95%;
+    display: block;
+
 }
 
 @media only screen and (max-width: 250px) {
@@ -186,7 +186,7 @@ header .menu-block:hover {
     transition: all 0.35s ease;
 }
 
-header a[href*="github.com"]:hover:before {
+header a[href*="github.com"]:hover::before {
     content: '\f09b';
     font-family: fontawesome;
     transition: all 0.35s ease;
@@ -194,7 +194,7 @@ header a[href*="github.com"]:hover:before {
     left: 4px;
 }
 
-header a[href*="twitter.com"]:hover:before {
+header a[href*="twitter.com"]:hover::before {
     content: '\f081';
     font-family: fontawesome;
     transition: all 0.35s ease;
@@ -202,7 +202,7 @@ header a[href*="twitter.com"]:hover:before {
     left: 4px;
 }
 
-header a[href*="hatenablog.com"]:hover:after {
+header a[href*="hatenablog.com"]:hover::after {
     content: ' \f35d';
     font-family: fontawesome;
     transition: all 0.35s ease;
