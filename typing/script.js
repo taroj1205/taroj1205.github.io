@@ -34,7 +34,7 @@ form.addEventListener('submit', (event) => {
 function start() {
     let num = 0;
     const request = new XMLHttpRequest();
-    request.open("GET", "https://raw.githubusercontent.com/taroj1205/taroj1205.github.io/main/typing/Files/dictionary.csv", true);
+    request.open("GET", "https://gist.githubusercontent.com/taroj1205/420c2e76184a47b18543c52ba229f510/raw/adcef62cf11593879be2ed1d715daeeca9bda7e5/dictionary.csv", true);
     request.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             const lines = this.responseText.split("\n");
