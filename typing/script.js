@@ -38,10 +38,18 @@ function start() {
             document.querySelector("#en").innerHTML = "<span style='color: white;'>" + en + "</span>";
 
 
-            document.addEventListener("keypress", function(event) {
+            document.addEventListener("keydown", function(event) {
+                var key = event.key;
+                console.log(key);
+                if (key == "Escape")
+                {
+                    document.getElementById("game").style.display = "none";
+                    document.getElementById("player").style.display = "none";
+                    document.getElementById("startMenu").style.display = "flex";
+                    return;
+                }
                 if (num < en.length)
                 {
-                    var key = event.key;
                     if (key === en[num]) {
                         num++;
                         const typedOut = "<span style='color: grey;'>" + en.substring(0, num) + "</span>";
