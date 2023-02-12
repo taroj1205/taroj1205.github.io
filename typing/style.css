@@ -1,7 +1,7 @@
 body {
     background-color: rgb(15, 15, 15);
     color: white;
-    font-family: 'Helvetica World'
+    font-family: 'Ui Gothic', "Consolas";
 }
 
 #game_window {
@@ -31,13 +31,19 @@ body {
     right: 0;
 }
 
-#startMenu h1, #startMenu form {
+h1 {
+    font-size: 5vh;
+    font-family: "Consolas";
+}
+
+#startMenu form {
     font-size: 5vh;
     text-align: center;
 }
 
 #startMenu form {
     display: flex;
+    transform: translateX(5%);
 }
 
 #startMenu form input[type="text"] {

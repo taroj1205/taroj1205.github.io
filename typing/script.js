@@ -2,6 +2,14 @@ window.onload = function() {
     document.getElementById('username').value = localStorage.getItem('username');
 };
 
+document.addEventListener("keydown", function(event) {
+    var key = event.key;
+    if (key == "Enter") {
+        var form = document.querySelector("form[name='enter_username']");
+        form.dispatchEvent(new Event("submit"));
+    }
+});
+
 // Get the form element
 const form = document.querySelector('form');
 
@@ -37,7 +45,7 @@ function start() {
             document.getElementById("game").style.display = "block";
             document.getElementById("startMenu").style.display = "none";
 
-            document.addEventListener("keypress", function(event) {
+            document.addEventListener("keydown", function(event) {
                 var key = event.key;
                 console.log(num,en[num],en,ja);
 
@@ -46,6 +54,10 @@ function start() {
                     document.getElementById("game").style.display = "none";
                     document.getElementById("player").style.display = "none";
                     document.getElementById("startMenu").style.display = "flex";
+                    return;
+                }
+                if (key == "Alt")
+                {
                     return;
                 }
                 if (num < en.length)
