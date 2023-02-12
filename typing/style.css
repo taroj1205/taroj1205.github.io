@@ -81,13 +81,13 @@ body {
 }
 
 #en {
-    font-size: 150px;
+    font-size: 15vh;
     text-align: center;
     position: relative;
 }
 
 #ja {
-    font-size: 50px;
+    font-size: 5vh;
     text-align: center;
     position: fixed;
     left: 50%;
