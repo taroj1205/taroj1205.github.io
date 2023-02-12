@@ -28,7 +28,8 @@ form.addEventListener('submit', (event) => {
           const lines = this.responseText.split("\n");
           const randomLine = lines[Math.floor(Math.random() * lines.length)];
           const [en, ja] = randomLine.split(",");
-          document.querySelector("#game").innerHTML = `<h1>${ja}</h1>\n<h1>${en}</h1>`;
+          document.querySelector("#ja").innerHTML = ja;
+          document.querySelector("#en").innerHTML = en;
       }
   };
   request.send();
