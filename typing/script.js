@@ -20,20 +20,46 @@ form.addEventListener('submit', (event) => {
   localStorage.setItem('username', username);
 
   document.getElementById('player').innerText = "Player: " + localStorage.getItem('username');
-
-  const request = new XMLHttpRequest();
-  request.open("GET", "https://raw.githubusercontent.com/taroj1205/taroj1205.github.io/main/typing/Files/dictionary.csv", true);
-  request.onreadystatechange = function() {
-      if (this.readyState === 4 && this.status === 200) {
-          const lines = this.responseText.split("\n");
-          const randomLine = lines[Math.floor(Math.random() * lines.length)];
-          const [en, ja] = randomLine.split(",");
-          document.querySelector("#ja").innerHTML = ja;
-          document.querySelector("#en").innerHTML = en;
-      }
-  };
-  request.send();
-
   document.getElementById("game").style.display = "block";
   document.getElementById("startMenu").style.display = "none";
+  start();
 });
+
+function start() {
+    let num = 0;
+    const request = new XMLHttpRequest();
+    request.open("GET", "https://raw.githubusercontent.com/taroj1205/taroj1205.github.io/main/typing/Files/dictionary.csv", true);
+    request.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            const lines = this.responseText.split("\n");
+            const randomLine = lines[Math.floor(Math.random() * lines.length)];
+            const [en, ja] = randomLine.split(",");
+            document.querySelector("#ja").innerHTML = ja;
+            document.querySelector("#en").innerHTML = "<span style='color: white;'>" + en + "</span>";
+
+
+            document.addEventListener("keypress", function(event) {
+                if (num < en.length)
+                {
+                    var key = event.key;
+                    if (key === en[num]) {
+                        num++;
+                        const typedOut = "<span style='color: grey;'>" + en.substring(0, num) + "</span>";
+                        const notYet = "<span style='color: #1fd755;'>" + en.substring(num) + "</span>";
+                        document.querySelector("#en").innerHTML = typedOut + notYet;
+                    }
+                    else {
+                        const typedOut = "<span style='color: grey;'>" + en.substring(0, num) + "</span>";
+                        const notYet = "<span style='color: #e06c75;'>" + en.substring(num) + "</span>";
+                        document.querySelector("#en").innerHTML = typedOut + notYet;
+                    }
+                }
+                if (num >= en.length) {
+                    num = 0;
+                    start();
+                }
+            });
+        }
+    };
+    request.send();
+}

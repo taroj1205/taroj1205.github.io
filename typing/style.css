@@ -62,7 +62,7 @@ body {
     #startMenu form input[type="submit"] {
       margin-top: 1em;
     }
-  }
+}
 
 #player {
     position: fixed;
