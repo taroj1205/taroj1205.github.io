@@ -20,8 +20,6 @@ form.addEventListener('submit', (event) => {
   localStorage.setItem('username', username);
 
   document.getElementById('player').innerText = "Player: " + localStorage.getItem('username');
-  document.getElementById("game").style.display = "block";
-  document.getElementById("startMenu").style.display = "none";
   start();
 });
 
@@ -36,9 +34,10 @@ function start() {
             const [en, ja] = randomLine.split(",");
             document.querySelector("#ja").innerHTML = ja;
             document.querySelector("#en").innerHTML = "<span style='color: white;'>" + en + "</span>";
+            document.getElementById("game").style.display = "block";
+            document.getElementById("startMenu").style.display = "none";
 
-
-            document.addEventListener("keydown", function(event) {
+            document.addEventListener("keypress", function(event) {
                 var key = event.key;
                 console.log(key);
                 if (key == "Escape")
@@ -67,6 +66,7 @@ function start() {
                     start();
                 }
             });
+
         }
     };
     request.send();
