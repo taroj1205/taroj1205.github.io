@@ -21,17 +21,17 @@ form.addEventListener('submit', (event) => {
 
   document.getElementById('player').innerText = "Player: " + localStorage.getItem('username');
 
-  const lines = [
-      "english,japanese",
-      "hello,こんにちは",
-      "goodbye,さようなら",
-      "yes,はい",
-      "no,いいえ"
-  ];
-
-  const randomLine = lines[Math.floor(Math.random() * lines.length)];
-  const [en, ja] = randomLine.split(",");
-  document.querySelector("#game").innerHTML = `<h1>${ja}</h1>\n<h1>${en}</h1>`;
+  const request = new XMLHttpRequest();
+  request.open("GET", "https://raw.githubusercontent.com/taroj1205/taroj1205.github.io/main/typing/Files/dictionary.csv", true);
+  request.onreadystatechange = function() {
+      if (this.readyState === 4 && this.status === 200) {
+          const lines = this.responseText.split("\n");
+          const randomLine = lines[Math.floor(Math.random() * lines.length)];
+          const [en, ja] = randomLine.split(",");
+          document.querySelector("#game").innerHTML = `<h1>${ja}</h1>\n<h1>${en}</h1>`;
+      }
+  };
+  request.send();
 
   document.getElementById("game").style.display = "block";
   document.getElementById("startMenu").style.display = "none";
