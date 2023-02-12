@@ -39,7 +39,8 @@ function start() {
 
             document.addEventListener("keypress", function(event) {
                 var key = event.key;
-                console.log(key);
+                console.log(num,en[num],en,ja);
+
                 if (key == "Escape")
                 {
                     document.getElementById("game").style.display = "none";
