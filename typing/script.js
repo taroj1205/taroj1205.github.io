@@ -28,7 +28,7 @@ function checkCredentials(username, password) {
 }
 
 // Get the form element
-const form = document.querySelector('form');
+var form = document.querySelector('form');
 
 // Add a submit event listener to the form
 form.addEventListener('submit', (event) => {
@@ -36,12 +36,12 @@ form.addEventListener('submit', (event) => {
     event.preventDefault();
 
     // Get the username and password input elements
-    const input_username = document.querySelector('input[name="username"]');
-    const input_password = document.querySelector('input[name="password"]');
+    var input_username = document.querySelector('input[name="username"]');
+    var input_password = document.querySelector('input[name="password"]');
 
     // Get the values of the inputs
-    const username = input_username.value;
-    const password = input_password.value;
+    var username = input_username.value;
+    var password = input_password.value;
 
     localStorage.setItem('username', username);
     localStorage.setItem('password', password);
@@ -52,14 +52,14 @@ form.addEventListener('submit', (event) => {
 
 
 function start() {
-    let num = 0;
-    const request = new XMLHttpRequest();
+    var num = 0;
+    var request = new XMLHttpRequest();
     request.open("GET", "https://gist.githubusercontent.com/taroj1205/420c2e76184a47b18543c52ba229f510/raw/adcef62cf11593879be2ed1d715daeeca9bda7e5/dictionary.csv", true);
     request.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            const lines = this.responseText.split("\n");
-            const randomLine = lines[Math.floor(Math.random() * lines.length)];
-            const [en, ja] = randomLine.split(",");
+            var lines = this.responseText.split("\n");
+            var randomLine = lines[Math.floor(Math.random() * lines.length)];
+            var [en, ja] = randomLine.split(",");
             document.querySelector("#ja").innerHTML = ja;
             document.querySelector("#en").innerHTML = "<span style='color: white;'>" + en + "</span>";
             document.getElementById("game").style.display = "block";
@@ -70,20 +70,20 @@ function start() {
             getData();
 
             document.addEventListener("keypress", function(event) {
-                let key = event.key;
+                var key = event.key;
                 console.log(num,en[num],en,ja);
 
                 if (num < en.length)
                 {
                     if (key === en[num]) {
                         num++;
-                        const typedOut = "<span style='color: grey;' id='typedOut'>" + en.substring(0, num) + "</span>";
-                        const notYet = "<span style='color: #1fd755;' id='notYet'>" + en.substring(num) + "</span>";
+                        var typedOut = "<span style='color: grey;' id='typedOut'>" + en.substring(0, num) + "</span>";
+                        var notYet = "<span style='color: #1fd755;' id='notYet'>" + en.substring(num) + "</span>";
                         document.querySelector("#en").innerHTML = typedOut + notYet;
                     }
                     else {
-                        const typedOut = "<span style='color: grey;' id='typedOut'>" + en.substring(0, num) + "</span>";
-                        const notYet = "<span style='color: #e06c75;' id='notYet'>" + en.substring(num) + "</span>";
+                        var typedOut = "<span style='color: grey;' id='typedOut'>" + en.substring(0, num) + "</span>";
+                        var notYet = "<span style='color: #e06c75;' id='notYet'>" + en.substring(num) + "</span>";
                         document.querySelector("#en").innerHTML = typedOut + notYet;
                     }
                 }
@@ -104,7 +104,7 @@ function start() {
 
 // Send data
 function submitData(en, ja) {
-    const xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
     xhr.open('POST', 'https://taroj1205.pythonanywhere.com', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() {
@@ -115,34 +115,34 @@ function submitData(en, ja) {
             document.querySelector('body').innerHTML = '<h1 style="text-align: center; font-size: 10vh;">Offline contact <a href="https://twitter.com/taroj1205">@taroj1205</a></h1>';
         }
     };
-    const username = localStorage.getItem('username');
-    const password = localStorage.getItem('password');
-    const data = 'username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password) + '&en=' + encodeURIComponent(en) + '&ja=' + encodeURIComponent(ja);
+    var username = localStorage.getItem('username');
+    var password = localStorage.getItem('password');
+    var data = 'username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password) + '&en=' + encodeURIComponent(en) + '&ja=' + encodeURIComponent(ja);
     xhr.send(data);
 }
 
 // Receive data
-let isFirstData = true;
+var isFirstData = true;
 
 function getData() {
-    const xhr = new XMLHttpRequest();
-    const username = localStorage.getItem('username');
+    var xhr = new XMLHttpRequest();
+    var username = localStorage.getItem('username');
     xhr.open('GET', 'https://taroj1205.pythonanywhere.com/data/' + username, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-            const data = JSON.parse(xhr.responseText);
+            var data = JSON.parse(xhr.responseText);
             if (isFirstData) {
-                for (let i = data.length - 1; i >= 0; i--) {
-                    const item = data[i];
-                    const p = document.createElement('p');
+                for (var i = data.length - 1; i >= 0; i--) {
+                    var item = data[i];
+                    var p = document.createElement('p');
                     p.innerHTML = item.english + ': ' + item.japanese;
                     document.getElementById('history').appendChild(p);
                 }
                 isFirstData = false;
             } else {
-                const latestData = data[data.length - 1];
-                const p = document.createElement('p');
+                var latestData = data[data.length - 1];
+                var p = document.createElement('p');
                 p.innerHTML = latestData.english + ': ' + latestData.japanese;
                 document.getElementById('history').insertBefore(p, document.getElementById('history').firstChild);
             }
