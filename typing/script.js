@@ -87,7 +87,7 @@ function start() {
                         document.querySelector("#en").innerHTML = typedOut + notYet;
                     }
                 }
-                if (num >= en.length) {
+                if (en.length <= num) {
                     submitData(en, ja);
                     num = 0;
                     start();
