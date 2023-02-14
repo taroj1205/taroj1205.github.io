@@ -1,12 +1,21 @@
+gameText = document.getElementById("game");
+startMenuText = document.getElementById("startMenu");
+playerText = document.getElementById("player");
+historyText = document.getElementById("history");
+resetText = document.getElementById("reset");
+wordsText = document.getElementById("words");
+usernameText = document.getElementById('username');
+passwordText = document.getElementById('password');
+
 window.onload = function() {
-    document.getElementById('username').value = localStorage.getItem('username');
-    document.getElementById('password').value = localStorage.getItem('password');
+    usernameText.value = localStorage.getItem('username');
+    passwordText.value = localStorage.getItem('password');
 };
 
 // Check if the username and password match a stored database
 function checkCredentials(username, password) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://172.29.179.50:5000/check", true);
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://taroj1205.pythonanywhere.com/check", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -74,11 +83,12 @@ function start() {
         if (this.readyState === 4 && this.status === 200) {
             lines = this.responseText.split("\n");
 
-            document.getElementById("game").style.display = "block";
-            document.getElementById("startMenu").style.display = "none";
-            document.getElementById("player").style.display = "block";
-            document.getElementById("history").style.display = "block";
-            document.getElementById("reset").style.display = "block";
+            gameText.style.display = "block";
+            startMenuText.style.display = "none";
+            playerText.style.display = "block";
+            historyText.style.display = "block";
+            resetText.style.display = "block";
+            wordsText.style.display = "block";
 
             newWord();
 
@@ -121,7 +131,7 @@ function submitData(currentWordEN, currentWordJA) {
     let en = currentWordEN;
     let ja = currentWordJA;
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://172.29.179.50:5000', true);
+    xhr.open('POST', 'https://taroj1205.pythonanywhere.com', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -135,13 +145,14 @@ function submitData(currentWordEN, currentWordJA) {
     const password = localStorage.getItem('password');
     const data = 'username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password) + '&en=' + encodeURIComponent(en) + '&ja=' + encodeURIComponent(ja);
     xhr.send(data);
+    document.querySelector("#words").innerHTML = "Words: " + historyText.getElementsByTagName("p").length;
 }
 
 // Receive data
 function getData() {
     const xhr = new XMLHttpRequest();
     const username = localStorage.getItem('username');
-    xhr.open('GET', 'http://172.29.179.50:5000/data/' + username, true);
+    xhr.open('GET', 'https://taroj1205.pythonanywhere.com/data/' + username, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -151,6 +162,7 @@ function getData() {
                 const p = document.createElement('p');
                 p.innerHTML = item.english + ': ' + item.japanese;
                 document.getElementById('history').appendChild(p);
+                document.querySelector("#words").innerHTML = "Words: " + historyText.getElementsByTagName("p").length;
             }
         }
         else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status !== 200) {
@@ -164,7 +176,7 @@ function resetHistory() {
     let password = prompt("Please enter your password to reset history:");
     let username = document.getElementById('player').innerText.split(': ')[1];
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://172.29.179.50:5000/reset", true);
+    xhr.open("POST", "https://taroj1205.pythonanywhere.com/reset", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -183,5 +195,4 @@ function resetHistory() {
         }
     };
     xhr.send("username=" + username + "&password=" + password);
-    getData();
 }

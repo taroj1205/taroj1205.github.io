@@ -1,7 +1,20 @@
+@font-face {
+    font-family: 'Noto Sans JP';
+    src: url('Files/NotoSansJP-Regular.otf') format('opentype');
+}
+
 body {
     background-color: rgb(15, 15, 15);
     color: white;
-    font-family: 'Ui Gothic', "Consolas";
+    font-family: 'Noto Sans JP', 'Ui Gothic', 'Consolas', 'Arial', sans-serif;
+}
+
+#words {
+    font-size: 1.5vw;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 50px;
 }
 
 #reset {
@@ -41,6 +54,7 @@ body {
 }
 
 #history {
+    font-size: 1vw;
     position: fixed;
     float: left;
     text-align: left;
@@ -49,6 +63,7 @@ body {
     z-index: 99999;
     display: none;
     scrollbar-width: none;
+    top: -18px;
 }
 
 #history::-webkit-scrollbar {
@@ -94,6 +109,7 @@ body {
     font-size: 1.2vw;
     background-color: rgb(15, 15, 15);
     top: -10px;
+    right: 10px;;
 }
 
 #game {
