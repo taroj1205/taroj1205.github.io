@@ -6,7 +6,7 @@ window.onload = function() {
 // Check if the username and password match a stored database
 function checkCredentials(username, password) {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://taroj1205.pythonanywhere.com/check", true);
+    xhr.open("POST", "http://172.29.179.50:5000/check", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -54,7 +54,6 @@ form.addEventListener('submit', (event) => {
 var lines;
 var currentWordEN;
 var currentWordJA;
-var currentWordIndex;
 
 function newWord() {
     var randomLine = lines[Math.floor(Math.random() * lines.length)];
@@ -79,9 +78,9 @@ function start() {
             document.getElementById("startMenu").style.display = "none";
             document.getElementById("player").style.display = "block";
             document.getElementById("history").style.display = "block";
+            document.getElementById("reset").style.display = "block";
 
             newWord();
-            getData();
 
             document.addEventListener("keypress", function(event) {
                 let key = event.key;
@@ -122,7 +121,7 @@ function submitData(currentWordEN, currentWordJA) {
     let en = currentWordEN;
     let ja = currentWordJA;
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://taroj1205.pythonanywhere.com', true);
+    xhr.open('POST', 'http://172.29.179.50:5000', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -139,12 +138,10 @@ function submitData(currentWordEN, currentWordJA) {
 }
 
 // Receive data
-let isFirstData = true;
-
 function getData() {
     const xhr = new XMLHttpRequest();
     const username = localStorage.getItem('username');
-    xhr.open('GET', 'https://taroj1205.pythonanywhere.com/data/' + username, true);
+    xhr.open('GET', 'http://172.29.179.50:5000/data/' + username, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -161,4 +158,30 @@ function getData() {
         }
     };
     xhr.send();
+}
+
+function resetHistory() {
+    let password = prompt("Please enter your password to reset history:");
+    let username = document.getElementById('player').innerText.split(': ')[1];
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://172.29.179.50:5000/reset", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+            // If the password matches, delete the database
+            if (xhr.responseText === "valid") {
+                alert("History has been reset.");
+                document.getElementById('history').innerHTML = "";
+            }
+            // If the password doesn't match, retry the form
+            else {
+                alert("Invalid password. Please try again.");
+            }
+        }
+        else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status !== 200) {
+            document.querySelector('body').innerHTML = '<h1 style="text-align: center; font-size: 10vh;">Offline contact <a href="https://twitter.com/taroj1205">@taroj1205</a></h1>';
+        }
+    };
+    xhr.send("username=" + username + "&password=" + password);
+    getData();
 }
