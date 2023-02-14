@@ -79,6 +79,7 @@ function start() {
             document.getElementById("player").style.display = "block";
             document.getElementById("history").style.display = "block";
             document.getElementById("reset").style.display = "block";
+            document.getElementById("words").style.display = "block";
 
             newWord();
 
@@ -135,6 +136,7 @@ function submitData(currentWordEN, currentWordJA) {
     const password = localStorage.getItem('password');
     const data = 'username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password) + '&en=' + encodeURIComponent(en) + '&ja=' + encodeURIComponent(ja);
     xhr.send(data);
+    document.querySelector("#words").innerHTML = "Words: " + document.getElementById("history").getElementsByTagName("p").length;
 }
 
 // Receive data
@@ -151,6 +153,7 @@ function getData() {
                 const p = document.createElement('p');
                 p.innerHTML = item.english + ': ' + item.japanese;
                 document.getElementById('history').appendChild(p);
+                document.querySelector("#words").innerHTML = "Words: " + document.getElementById("history").getElementsByTagName("p").length;
             }
         }
         else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status !== 200) {
