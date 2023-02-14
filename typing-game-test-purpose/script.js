@@ -8,7 +8,7 @@ function onSignIn(googleUser) {
     let username = profile.getName();
 
     // Update the player name
-    ckeckCredentials(username);
+    getData(username);
     console.log(username);
 }
 
@@ -18,55 +18,6 @@ function onSignIn(googleUser) {
         console.log('User signed out.');
     });
 }
-
-// Check if the username and password match a stored database
-function checkCredentials(username) {
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://172.29.179.50:5000/check", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-            // If the username exists in the database, continue
-            if (xhr.responseText === "valid") {
-                document.getElementById('player').innerText = "Player: " + username;
-                getData();
-                start();
-            }
-            // If the username doesn't exist, retry the form
-            else {
-                alert("Invalid username. Please try again.");
-            }
-        }
-        else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status !== 200) {
-            document.querySelector('body').innerHTML = '<h1 style="text-align: center; font-size: 10vh;">Offline contact <a href="https://twitter.com/taroj1205">@taroj1205</a></h1>';
-        }
-    };
-    xhr.send("username=" + username);
-}
-
-
-// Get the form element
-const form = document.querySelector('form');
-
-// Add a submit event listener to the form
-form.addEventListener('submit', (event) => {
-    // Prevent the default form submission behavior
-    event.preventDefault();
-
-    // Get the username and password input elements
-    const input_username = document.querySelector('input[name="username"]');
-    const input_password = document.querySelector('input[name="password"]');
-
-    // Get the values of the inputs
-    const username = input_username.value;
-    const password = input_password.value;
-
-    localStorage.setItem('username', username);
-    localStorage.setItem('password', password);
-
-    // Check if the username and password match a stored database
-    checkCredentials(username, password);
-});
 
 var lines;
 var currentWordEN;
@@ -155,9 +106,8 @@ function submitData(currentWordEN, currentWordJA) {
 }
 
 // Receive data
-function getData() {
+function getData(username) {
     const xhr = new XMLHttpRequest();
-    const username = localStorage.getItem('username');
     xhr.open('GET', 'http://172.29.179.50:5000/data/' + username, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
@@ -175,6 +125,7 @@ function getData() {
         }
     };
     xhr.send();
+    start();
 }
 
 function resetHistory() {
@@ -201,19 +152,4 @@ function resetHistory() {
     };
     xhr.send("username=" + username + "&password=" + password);
     getData();
-}
-
-function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-}
-
-  function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-        console.log('User signed out.');
-    });
 }
