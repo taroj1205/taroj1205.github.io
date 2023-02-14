@@ -5,7 +5,7 @@ window.onload = function() {
 
 // Check if the username and password match a stored database
 function checkCredentials(username, password) {
-    let xhr = new XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
     xhr.open("POST", "https://taroj1205.pythonanywhere.com/check", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
@@ -50,68 +50,74 @@ form.addEventListener('submit', (event) => {
     checkCredentials(username, password);
 });
 
-let num = 0;
-let en = null;
-let ja = null;
+var lines;
+var currentWordEN;
+var currentWordJA;
+var currentWordIndex;
+
+function newWord() {
+    var randomLine = lines[Math.floor(Math.random() * lines.length)];
+    var [en, ja] = randomLine.split(",");
+    currentWordEN = en;
+    currentWordJA = ja;
+
+    document.querySelector("#ja").innerHTML = ja;
+    document.querySelector("#en").innerHTML = "<span style='color: white;'>" + en + "</span>";
+}
+
 
 function start() {
+    let num = 0;
     const request = new XMLHttpRequest();
-    request.open("GET", "https://raw.githubusercontent.com/taroj1205/taroj1205.github.io/main/typing/Files/dictionary.csv", true);
+    request.open("GET", "https://gist.githubusercontent.com/taroj1205/420c2e76184a47b18543c52ba229f510/raw/adcef62cf11593879be2ed1d715daeeca9bda7e5/dictionary.csv", true);
     request.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            const lines = this.responseText.split("\n");
-            const randomLine = lines[Math.floor(Math.random() * lines.length)];
-            [en, ja] = randomLine.split(",");
+            lines = this.responseText.split("\n");
 
-            updateUI();
+            document.getElementById("game").style.display = "block";
+            document.getElementById("startMenu").style.display = "none";
+            document.getElementById("player").style.display = "block";
+            document.getElementById("history").style.display = "block";
+
+            newWord();
             getData();
-            handleKeyPress();
-        } else if (this.readyState === XMLHttpRequest.DONE && this.status !== 200) {
+
+            document.addEventListener("keypress", function(event) {
+                let key = event.key;
+                console.log(num, currentWordEN[num], currentWordEN, currentWordJA);
+
+                if (key === currentWordEN[num]) {
+                    num++;
+                    const typedOut = "<span style='color: grey;' id='typedOut'>" + currentWordEN.substring(0, num) + "</span>";
+                    const notYet = "<span style='color: #1fd755;' id='notYet'>" + currentWordEN.substring(num) + "</span>";
+                    document.querySelector("#en").innerHTML = typedOut + notYet;
+
+                    if (num >= currentWordEN.length) {
+                        num = 0;
+                        submitData(currentWordEN, currentWordJA);
+                        newWord();
+                        getData();
+                    }
+                }
+                else {
+                    const typedOut = "<span style='color: grey;' id='typedOut'>" + currentWordEN.substring(0, num) + "</span>";
+                    const notYet = "<span style='color: #e06c75;' id='notYet'>" + currentWordEN.substring(num) + "</span>";
+                    document.querySelector("#en").innerHTML = typedOut + notYet;
+                }
+            });
+
+        }
+        else if (this.readyState === XMLHttpRequest.DONE && this.status !== 200) {
             document.querySelector('body').innerHTML = '<h1 style="text-align: center; font-size: 10vh;">Offline contact <a href="https://twitter.com/taroj1205">@taroj1205</a></h1>';
         }
     };
     request.send();
 }
 
-function updateUI() {
-    document.querySelector("#ja").innerHTML = ja;
-    document.querySelector("#en").innerHTML = "<span style='color: white;'>" + en + "</span>";
-    document.getElementById("game").style.display = "block";
-    document.getElementById("startMenu").style.display = "none";
-    document.getElementById("player").style.display = "block";
-    document.getElementById("history").style.display = "block";
-}
-
-function handleKeyPress() {
-    document.addEventListener("keypress", function(event) {
-        let key = event.key;
-        console.log(num, en[num], en, ja);
-
-        if (num < en.length) {
-            if (key === en[num]) {
-                num++;
-                const typedOut = "<span style='color: grey;' id='typedOut'>" + en.substring(0, num) + "</span>";
-                const notYet = "<span style='color: #1fd755;' id='notYet'>" + en.substring(num) + "</span>";
-                document.querySelector("#en").innerHTML = typedOut + notYet;
-            } else {
-                const typedOut = "<span style='color: grey;' id='typedOut'>" + en.substring(0, num) + "</span>";
-                const notYet = "<span style='color: #e06c75;' id='notYet'>" + en.substring(num) + "</span>";
-                document.querySelector("#en").innerHTML = typedOut + notYet;
-            }
-        }
-
-        if (en.length === num) {
-            console.log("All typed out!");
-            submitData(en, ja);
-            num = 0;
-            console.log("num reset!");
-            start();
-        }
-    });
-}
-
 // Send data
-function submitData(en, ja) {
+function submitData(currentWordEN, currentWordJA) {
+    let en = currentWordEN;
+    let ja = currentWordJA;
     const xhr = new XMLHttpRequest();
     xhr.open('POST', 'https://taroj1205.pythonanywhere.com', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -127,7 +133,6 @@ function submitData(en, ja) {
     const password = localStorage.getItem('password');
     const data = 'username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password) + '&en=' + encodeURIComponent(en) + '&ja=' + encodeURIComponent(ja);
     xhr.send(data);
-    console.log("submitData() complete.");
 }
 
 // Receive data
