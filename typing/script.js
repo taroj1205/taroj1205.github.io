@@ -13,6 +13,7 @@ function checkCredentials(username, password) {
             // If the username exists in the database and the password matches, continue
             if (xhr.responseText === "valid") {
                 document.getElementById('player').innerText = "Player: " + username;
+                getData();
                 start();
             }
             // If the username exists but the password doesn't match, retry the form
@@ -94,8 +95,10 @@ function start() {
 
                     if (num >= currentWordEN.length) {
                         num = 0;
+                        const p = document.createElement('p');
+                        p.innerHTML = currentWordEN + ': ' + currentWordJA;
+                        document.getElementById('history').insertBefore(p, document.getElementById('history').firstChild);
                         submitData(currentWordEN, currentWordJA);
-                        getData();
                         newWord();
                     }
                 }
@@ -146,19 +149,11 @@ function getData() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
             const data = JSON.parse(xhr.responseText);
-            if (isFirstData) {
-                for (let i = data.length - 1; i >= 0; i--) {
-                    const item = data[i];
-                    const p = document.createElement('p');
-                    p.innerHTML = item.english + ': ' + item.japanese;
-                    document.getElementById('history').appendChild(p);
-                }
-                isFirstData = false;
-            } else {
-                const latestData = data[data.length - 1];
+            for (let i = data.length - 1; i >= 0; i--) {
+                const item = data[i];
                 const p = document.createElement('p');
-                p.innerHTML = latestData.english + ': ' + latestData.japanese;
-                document.getElementById('history').insertBefore(p, document.getElementById('history').firstChild);
+                p.innerHTML = item.english + ': ' + item.japanese;
+                document.getElementById('history').appendChild(p);
             }
         }
         else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status !== 200) {
