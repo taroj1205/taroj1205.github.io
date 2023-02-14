@@ -5,7 +5,7 @@ window.onload = function() {
 
 // Check if the username and password match a stored database
 function checkCredentials(username, password) {
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open("POST", "https://taroj1205.pythonanywhere.com/check", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
