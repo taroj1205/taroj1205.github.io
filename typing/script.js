@@ -1,6 +1,15 @@
+gameText = document.getElementById("game");
+startMenuText = document.getElementById("startMenu");
+playerText = document.getElementById("player");
+historyText = document.getElementById("history");
+resetText = document.getElementById("reset");
+wordsText = document.getElementById("words");
+usernameText = document.getElementById('username');
+passwordText = document.getElementById('password');
+
 window.onload = function() {
-    document.getElementById('username').value = localStorage.getItem('username');
-    document.getElementById('password').value = localStorage.getItem('password');
+    usernameText.value = localStorage.getItem('username');
+    passwordText.value = localStorage.getItem('password');
 };
 
 // Check if the username and password match a stored database
@@ -74,12 +83,12 @@ function start() {
         if (this.readyState === 4 && this.status === 200) {
             lines = this.responseText.split("\n");
 
-            document.getElementById("game").style.display = "block";
-            document.getElementById("startMenu").style.display = "none";
-            document.getElementById("player").style.display = "block";
-            document.getElementById("history").style.display = "block";
-            document.getElementById("reset").style.display = "block";
-            document.getElementById("words").style.display = "block";
+            gameText.style.display = "block";
+            startMenuText.style.display = "none";
+            playerText.style.display = "block";
+            historyText.style.display = "block";
+            resetText.style.display = "block";
+            wordsText.style.display = "block";
 
             newWord();
 
@@ -136,7 +145,7 @@ function submitData(currentWordEN, currentWordJA) {
     const password = localStorage.getItem('password');
     const data = 'username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password) + '&en=' + encodeURIComponent(en) + '&ja=' + encodeURIComponent(ja);
     xhr.send(data);
-    document.querySelector("#words").innerHTML = "Words: " + document.getElementById("history").getElementsByTagName("p").length;
+    document.querySelector("#words").innerHTML = "Words: " + historyText.getElementsByTagName("p").length;
 }
 
 // Receive data
@@ -153,7 +162,7 @@ function getData() {
                 const p = document.createElement('p');
                 p.innerHTML = item.english + ': ' + item.japanese;
                 document.getElementById('history').appendChild(p);
-                document.querySelector("#words").innerHTML = "Words: " + document.getElementById("history").getElementsByTagName("p").length;
+                document.querySelector("#words").innerHTML = "Words: " + historyText.getElementsByTagName("p").length;
             }
         }
         else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status !== 200) {
@@ -186,5 +195,4 @@ function resetHistory() {
         }
     };
     xhr.send("username=" + username + "&password=" + password);
-    getData();
 }
