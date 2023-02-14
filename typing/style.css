@@ -1,7 +1,20 @@
+@font-face {
+    font-family: 'Noto Sans JP';
+    src: url('Files/NotoSansJP-Regular.otf') format('opentype');
+}
+
 body {
     background-color: rgb(15, 15, 15);
     color: white;
-    font-family: 'Ui Gothic', "Consolas";
+    font-family: 'Noto Sans JP', 'Ui Gothic', 'Consolas', 'Arial', sans-serif;
+}
+
+#words {
+    font-size: 1.5vw;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 50px;
 }
 
 #words {
