@@ -1,7 +1,24 @@
-window.onload = function() {
-    document.getElementById('username').value = localStorage.getItem('username');
-    document.getElementById('password').value = localStorage.getItem('password');
-};
+var googleUser = {};
+
+function onSignIn(googleUser) {
+    // Get the user's profile information
+    var profile = googleUser.getBasicProfile();
+
+    // Display the user's name and email
+    var name = profile.getName();
+    var email = profile.getEmail();
+    var username = email.split("@")[0];
+
+    // Update the player name
+    document.getElementById("player").innerHTML = "Player: " + username;
+}
+
+    function signOut() {
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+        console.log('User signed out.');
+    });
+}
 
 // Check if the username and password match a stored database
 function checkCredentials(username, password) {
