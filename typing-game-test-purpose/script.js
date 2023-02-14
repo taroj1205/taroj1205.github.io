@@ -5,10 +5,11 @@ function onSignIn(googleUser) {
     let profile = googleUser.getBasicProfile();
 
     // Display the user's name and email
-    let name = profile.getName();
+    let username = profile.getName();
 
     // Update the player name
-    document.getElementById("player").innerHTML = "Player: " + name;
+    ckeckCredentials(username);
+    console.log(username);
 }
 
     function signOut() {
@@ -19,29 +20,30 @@ function onSignIn(googleUser) {
 }
 
 // Check if the username and password match a stored database
-function checkCredentials(username, password) {
+function checkCredentials(username) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "http://172.29.179.50:5000/check", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-            // If the username exists in the database and the password matches, continue
+            // If the username exists in the database, continue
             if (xhr.responseText === "valid") {
                 document.getElementById('player').innerText = "Player: " + username;
                 getData();
                 start();
             }
-            // If the username exists but the password doesn't match, retry the form
+            // If the username doesn't exist, retry the form
             else {
-                alert("Invalid username or password. Please try again.");
+                alert("Invalid username. Please try again.");
             }
         }
         else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status !== 200) {
             document.querySelector('body').innerHTML = '<h1 style="text-align: center; font-size: 10vh;">Offline contact <a href="https://twitter.com/taroj1205">@taroj1205</a></h1>';
         }
     };
-    xhr.send("username=" + username + "&password=" + password);
+    xhr.send("username=" + username);
 }
+
 
 // Get the form element
 const form = document.querySelector('form');
