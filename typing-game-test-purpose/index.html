@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Typing Game</title>
+    <meta charset="UTF-8">
+    <meta name="google-signin-client_id" content="489106469704-p5mad5u80db73m56ptt53441f11sul3e.apps.googleusercontent.com">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<main>
+<p id="history"></p>
+<div id="game_window">
+    <section id="startMenu">
+        <form name="enter_username">
+            <input type="text" name="username" id="username" required autofocus placeholder="username">
+            <input type="text" name="password" id="password" required placeholder="password">
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </section>
+    <section id="game">
+        <p id="ja"></p>
+        <p id="en"></p>
+    </section>
+    <button id="reset" onclick="resetHistory()">Reset History</button>
+    <div class="g-signin2" data-onsuccess="onSignIn"></div>
+    <a href="#" onclick="signOut();" class="signout">Sign out</a>
+</div>
+</main>
+<p id="player"></p>
+<script async src="script.js"></script>
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+</body>
+</html>
