@@ -50,6 +50,21 @@ form.addEventListener('submit', (event) => {
     checkCredentials(username, password);
 });
 
+var lines;
+var currentWordEN;
+var currentWordJA;
+var currentWordIndex;
+
+function newWord() {
+    var randomLine = lines[Math.floor(Math.random() * lines.length)];
+    var [en, ja] = randomLine.split(",");
+    currentWordEN = en;
+    currentWordJA = ja;
+
+    document.querySelector("#ja").innerHTML = ja;
+    document.querySelector("#en").innerHTML = "<span style='color: white;'>" + en + "</span>";
+}
+
 
 function start() {
     let num = 0;
@@ -57,40 +72,37 @@ function start() {
     request.open("GET", "https://gist.githubusercontent.com/taroj1205/420c2e76184a47b18543c52ba229f510/raw/adcef62cf11593879be2ed1d715daeeca9bda7e5/dictionary.csv", true);
     request.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            const lines = this.responseText.split("\n");
-            const randomLine = lines[Math.floor(Math.random() * lines.length)];
-            const [en, ja] = randomLine.split(",");
-            document.querySelector("#ja").innerHTML = ja;
-            document.querySelector("#en").innerHTML = "<span style='color: white;'>" + en + "</span>";
+            lines = this.responseText.split("\n");
+
             document.getElementById("game").style.display = "block";
             document.getElementById("startMenu").style.display = "none";
             document.getElementById("player").style.display = "block";
             document.getElementById("history").style.display = "block";
 
+            newWord();
             getData();
 
             document.addEventListener("keypress", function(event) {
                 let key = event.key;
-                console.log(num,en[num],en,ja);
+                console.log(num, currentWordEN[num], currentWordEN, currentWordJA);
 
-                if (num < en.length)
-                {
-                    if (key === en[num]) {
-                        num++;
-                        const typedOut = "<span style='color: grey;' id='typedOut'>" + en.substring(0, num) + "</span>";
-                        const notYet = "<span style='color: #1fd755;' id='notYet'>" + en.substring(num) + "</span>";
-                        document.querySelector("#en").innerHTML = typedOut + notYet;
-                    }
-                    else {
-                        const typedOut = "<span style='color: grey;' id='typedOut'>" + en.substring(0, num) + "</span>";
-                        const notYet = "<span style='color: #e06c75;' id='notYet'>" + en.substring(num) + "</span>";
-                        document.querySelector("#en").innerHTML = typedOut + notYet;
+                if (key === currentWordEN[num]) {
+                    num++;
+                    const typedOut = "<span style='color: grey;' id='typedOut'>" + currentWordEN.substring(0, num) + "</span>";
+                    const notYet = "<span style='color: #1fd755;' id='notYet'>" + currentWordEN.substring(num) + "</span>";
+                    document.querySelector("#en").innerHTML = typedOut + notYet;
+
+                    if (num >= currentWordEN.length) {
+                        num = 0;
+                        submitData(currentWordEN, currentWordJA);
+                        newWord();
+                        getData();
                     }
                 }
-                if (en.length <= num) {
-                    submitData(en, ja);
-                    num = 0;
-                    start();
+                else {
+                    const typedOut = "<span style='color: grey;' id='typedOut'>" + currentWordEN.substring(0, num) + "</span>";
+                    const notYet = "<span style='color: #e06c75;' id='notYet'>" + currentWordEN.substring(num) + "</span>";
+                    document.querySelector("#en").innerHTML = typedOut + notYet;
                 }
             });
 
@@ -103,7 +115,9 @@ function start() {
 }
 
 // Send data
-function submitData(en, ja) {
+function submitData(currentWordEN, currentWordJA) {
+    let en = currentWordEN;
+    let ja = currentWordJA;
     const xhr = new XMLHttpRequest();
     xhr.open('POST', 'https://taroj1205.pythonanywhere.com', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
