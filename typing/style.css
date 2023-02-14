@@ -6,9 +6,11 @@ body {
 
 #reset {
     position: fixed;
-    font-size: 1.2vw;
-    bottom: -10px;
-    float: right;
+    font-size: 1vw;
+    text-align: right;
+    right: 0;
+    bottom: 0;
+    display: none;
 }
 
 #game_window {
@@ -60,10 +62,11 @@ body {
 
 #startMenu form {
     display: block;
+    height: 20vh;
 }
 
 #startMenu form input[type="text"] {
-    font-size: 3vw;
+    font-size: 2.5vw;
     padding: 1vw;
     width: 50%;
     height: 25%;
@@ -71,7 +74,7 @@ body {
 }
 
 #startMenu form input[type="submit"] {
-    font-size: 2vw;
+    font-size: 1vw;
     height: 20%;
 }
 
