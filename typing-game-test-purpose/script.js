@@ -1,11 +1,12 @@
-let googleUser = {};
-
 function onSignIn(googleUser) {
+    console.log("onSignIn called"); // Add this line
     // Get the user's profile information
     let profile = googleUser.getBasicProfile();
 
     // Display the user's name and email
+    let id = profile.getId();
     let username = profile.getName();
+    let pfp = profile.getImageUrl();
 
     // Update the player name
     getData(username);
