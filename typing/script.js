@@ -95,8 +95,8 @@ function start() {
                     if (num >= currentWordEN.length) {
                         num = 0;
                         submitData(currentWordEN, currentWordJA);
-                        newWord();
                         getData();
+                        newWord();
                     }
                 }
                 else {
