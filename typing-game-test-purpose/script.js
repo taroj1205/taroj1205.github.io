@@ -1,16 +1,14 @@
-var googleUser = {};
+let googleUser = {};
 
 function onSignIn(googleUser) {
     // Get the user's profile information
-    var profile = googleUser.getBasicProfile();
+    let profile = googleUser.getBasicProfile();
 
     // Display the user's name and email
-    var name = profile.getName();
-    var email = profile.getEmail();
-    var username = email.split("@")[0];
+    let name = profile.getName();
 
     // Update the player name
-    document.getElementById("player").innerHTML = "Player: " + username;
+    document.getElementById("player").innerHTML = "Player: " + name;
 }
 
     function signOut() {
@@ -22,7 +20,7 @@ function onSignIn(googleUser) {
 
 // Check if the username and password match a stored database
 function checkCredentials(username, password) {
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
     xhr.open("POST", "http://172.29.179.50:5000/check", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
