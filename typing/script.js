@@ -66,6 +66,10 @@ var currentWordJA;
 
 function newWord() {
     var randomLine = lines[Math.floor(Math.random() * lines.length)];
+    if (randomLine === 0)
+    {
+        randomline ++;
+    }
     var [en, ja] = randomLine.split(",");
     currentWordEN = en;
     currentWordJA = ja;
