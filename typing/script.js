@@ -280,15 +280,27 @@ const removeContainer = () => {
     }
 };
 
+let isInputFocused = false;
+const enInput = document.getElementById("en-input");
+
+function toggleInputFocus() {
+    if (isInputFocused) {
+        enInput.blur();
+    } else {
+        enInput.focus();
+    }
+    isInputFocused = !isInputFocused;
+}
+
 menuToggle.addEventListener("click", function() {
     historyMenu.style.display = (historyMenu.style.display === "inline-block") ? "none" : "inline-block";
-    if (window.matchMedia("(max-width: 800px)").matches) {
-        const enInput = document.getElementById("en-input");
-
-        if (enInput === document.activeElement) {
-            enInput.blur();
-        } else {
-            enInput.focus();
-        }
-    }
+    toggleInputFocus();
 });
+
+document.addEventListener('click', function(event) {
+    if (document.activeElement.id === 'en-input') {
+        event.preventDefault();
+    } else {
+        toggleInputFocus();
+    }
+}, { passive: false });
