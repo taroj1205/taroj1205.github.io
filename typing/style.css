@@ -3,10 +3,37 @@
     src: url('Files/NotoSansJP-Regular.otf') format('opentype');
 }
 
+@media only screen and (min-width: 800px) {
+    #history::-webkit-scrollbar {
+        display: none;
+    }
+
+    #history-menu {
+        display: inline-block;
+    }
+
+    #history {
+        font-size: 1.2rem;
+        height: 95vh !important;
+        overflow: auto;
+        display: inline-block !important;
+    }
+
+    #reset {
+        position: fixed;
+        font-size: 1vw;
+        text-align: right;
+        left: 0;
+        bottom: 0;
+        display: none;
+    }
+}
+
 body {
     background-color: rgb(15, 15, 15);
     color: white;
     font-family: 'Noto Sans JP', 'Ui Gothic', 'Consolas', 'Arial', sans-serif;
+    height: 100%;
 }
 
 #upload-csv {
@@ -22,15 +49,6 @@ body {
     right: 0;
     bottom: 50px;
     text-align: center;
-}
-
-#reset {
-    position: fixed;
-    font-size: 1vw;
-    text-align: right;
-    right: 0;
-    bottom: 0;
-    display: none;
 }
 
 #game_window {
@@ -54,28 +72,29 @@ body {
     align-items: center;
     justify-content: center;
     position: absolute;
-    top: 0;
-    bottom: 0;
+    bottom: 70px;
     left: 0;
     right: 0;
 }
 
-#history {
-    font-size: 1vw;
-    position: fixed;
-    float: left;
-    text-align: left;
-    height: 100vh;
-    overflow: auto;
-    z-index: 99999;
-    display: none;
-    scrollbar-width: none;
-    top: -18px;
+button {
+    z-index: 9999999;
 }
 
-#history::-webkit-scrollbar {
+#menu-toggle {
     display: none;
 }
+
+#history {
+    text-align: left;
+    overflow: auto;
+    height: calc(100% - 4rem);
+}
+
+#history-menu {
+    z-index: -99999;
+}
+
 
 #startMenu form {
     font-size: 5vw;
@@ -100,14 +119,91 @@ body {
     height: 20%;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
     #startMenu form {
         flex-direction: column;
         display: block;
     }
 
     #startMenu form input[type="submit"] {
-      margin-top: 1em;
+        margin-top: 1em;
+        width: larger;
+        font-size: 1rem;
+    }
+
+    #startMenu form input[type="text"] {
+        font-size: 1.5rem;
+    }
+
+    body.run #menu-toggle {
+        display: block;
+        color: #fff;
+    }
+
+    #history {
+        font-size: 2vw;
+        text-align: center;
+        height: 100vh;
+    }
+
+    #history::-webkit-scrollbar {
+        display: block !important;
+    }
+
+    #history-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        z-index: 99999;
+        background-color: #262626;
+        display: none;
+    }
+
+    #menu-toggle {
+        position: fixed;
+        top: 0;
+        left: 0;
+        margin: 1rem;
+        font-size: 2rem;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        z-index: 100000;
+    }
+
+    #player {
+        font-size: 1rem !important;
+    }
+
+    #en {
+        padding-top: 30px;
+        font-size: 6rem !important;
+        width: 100%;
+    }
+
+    #ja {
+        font-size: 4rem !important;
+        width: 100%;
+    }
+
+    #words {
+        font-size: 1rem !important;
+    }
+
+    body.run #reset {
+        width: larger;
+        font-size: 1rem;
+    }
+
+    #reset {
+        position: fixed;
+        font-size: 1vw;
+        text-align: right;
+        right: 0;
+        bottom: 0;
+        display: none;
     }
 }
 
@@ -125,7 +221,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100vw;
+    width: 90vw;
     z-index: -1;
 }
 

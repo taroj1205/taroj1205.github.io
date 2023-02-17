@@ -7,6 +7,12 @@ wordsText = document.getElementById("words");
 usernameText = document.getElementById('username');
 passwordText = document.getElementById('password');
 uploadCSVButton = document.getElementById('upload-csv');
+menuToggle = document.getElementById("menu-toggle");
+historyMenu = document.getElementById("history-menu");
+historyMenuButton = document.getElementById("menu-toggle");
+submitButton = document.getElementById("username-submit");
+
+num = 0;
 
 window.onload = function() {
     usernameText.value = localStorage.getItem('username');
@@ -29,6 +35,7 @@ function checkCredentials(username, password) {
             // If the username exists but the password doesn't match, retry the form
             else {
                 alert("Invalid username or password. Please try again.");
+                submitButton.disabled = false;
             }
         }
         else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status !== 200) {
@@ -45,6 +52,8 @@ const form = document.querySelector('form');
 form.addEventListener('submit', (event) => {
     // Prevent the default form submission behavior
     event.preventDefault();
+
+    submitButton.disabled = true;
 
     // Get the username and password input elements
     const input_username = document.querySelector('input[name="username"]');
@@ -69,7 +78,7 @@ function newWord() {
     var randomLine = lines[Math.floor(Math.random() * lines.length)];
     if (randomLine === 0)
     {
-        randomline ++;
+        randomLine++;
     }
     var [en, ja] = randomLine.split(",");
     currentWordEN = en;
@@ -95,9 +104,7 @@ function start() {
         request.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 lines = this.responseText.split("\n");
-
                 game(lines,num);
-
             }
         else if (this.readyState === XMLHttpRequest.DONE && this.status !== 200) {
             document.querySelector('body').innerHTML = '<h1 style="text-align: center; font-size: 10vh;">Offline contact <a href="https://twitter.com/taroj1205">@taroj1205</a></h1>';
@@ -109,13 +116,14 @@ function start() {
 
 function game(lines,num)
 {
-    gameText.style.display = "block";
+    gameText.style.display = "inline-block";
     startMenuText.style.display = "none";
-    playerText.style.display = "block";
-    historyText.style.display = "block";
-    resetText.style.display = "block";
-    wordsText.style.display = "block";
+    playerText.style.display = "inline-block";
+    resetText.style.display = "inline-block";
+    wordsText.style.display = "inline-block";
     uploadCSVButton.style.display = "none";
+
+    document.querySelector('body').classList.add('run');
 
     newWord();
 
@@ -263,3 +271,7 @@ const removeContainer = () => {
         container.remove();
     }
 };
+
+menuToggle.addEventListener("click", function() {
+    historyMenu.style.display = (historyMenu.style.display === "inline-block") ? "none" : "inline-block";
+});

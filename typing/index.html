@@ -7,13 +7,16 @@
 </head>
 <body>
 <main>
-<p id="history"></p>
+    <button id="menu-toggle">&#9776;</button>
+    <div id="history-menu">
+      <div id="history"></div>
+    </div>
     <section id="startMenu">
         <form name="enter_username">
             <input type="text" name="username" id="username" required autofocus placeholder="username">
             <input type="text" name="password" id="password" required placeholder="password">
             <br>
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" id="username-submit">
         </form>
 
         <button id="upload-csv" onclick="openFilePicker()">Upload or Copy-Paste CSV File</button>
@@ -22,6 +25,7 @@
         <p id="ja"></p>
         <p id="en"></p>
         <p id="words"></p>
+        <input type="text" id="en-input" autofocus style="display:none;">
     </section>
     <button id="reset" onclick="resetHistory()">Reset History</button>
 </main>
