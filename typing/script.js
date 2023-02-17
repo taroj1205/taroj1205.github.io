@@ -304,3 +304,20 @@ document.addEventListener('click', function(event) {
         toggleInputFocus();
     }
 }, { passive: false });
+
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+const scrollToTopButton = document.getElementById("scroll-to-top-button");
+
+window.addEventListener("scroll", function() {
+    if (window.pageYOffset > 200) {
+        scrollToTopButton.classList.add("show");
+    } else {
+        scrollToTopButton.classList.remove("show");
+    }
+});

@@ -29,14 +29,17 @@
     }
 
     #game {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90vw;
-            z-index: -1;
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90vw;
+        z-index: -1;
         }
+    #scroll-to-top-button {
+        display: none;
+    }
 }
 
 body {
@@ -227,9 +230,22 @@ button {
     }
 
     #startMenu form {
-        top: 200px;
+        top: 200px !important;
         position: absolute;
     }
+
+    #scroll-to-top-button {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        display: none;
+    }
+
+    #scroll-to-top-button.show {
+        display: block;
+        z-index: 9999999;
+    }
+
 }
 
 #player {
