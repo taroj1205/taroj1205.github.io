@@ -258,5 +258,8 @@ function openFilePicker() {
 
 const removeContainer = () => {
     const container = document.getElementById('csv');
-    container.remove();
+    if (container)
+    {
+        container.remove();
+    }
 };
