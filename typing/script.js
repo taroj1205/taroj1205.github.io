@@ -128,8 +128,7 @@ function game(lines,num)
     uploadCSVButton.style.display = "none";
 
     if (window.matchMedia("(max-width: 800px)").matches) {
-        const game_input = document.querySelector("#en-input");
-        game_input.focus();
+        document.getElementById("en-input").focus();
     }
 
     document.querySelector('body').classList.add('run');
@@ -283,4 +282,13 @@ const removeContainer = () => {
 
 menuToggle.addEventListener("click", function() {
     historyMenu.style.display = (historyMenu.style.display === "inline-block") ? "none" : "inline-block";
+    if (window.matchMedia("(max-width: 800px)").matches) {
+        const enInput = document.getElementById("en-input");
+
+        if (enInput === document.activeElement) {
+            enInput.blur();
+        } else {
+            enInput.focus();
+        }
+    }
 });
