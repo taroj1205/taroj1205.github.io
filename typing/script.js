@@ -6,6 +6,7 @@ resetText = document.getElementById("reset");
 wordsText = document.getElementById("words");
 usernameText = document.getElementById('username');
 passwordText = document.getElementById('password');
+uploadCSVButton = document.getElementById('upload-csv');
 
 window.onload = function() {
     usernameText.value = localStorage.getItem('username');
@@ -81,53 +82,68 @@ function newWord() {
 
 function start() {
     let num = 0;
-    const request = new XMLHttpRequest();
-    request.open("GET", "https://gist.githubusercontent.com/taroj1205/420c2e76184a47b18543c52ba229f510/raw/adcef62cf11593879be2ed1d715daeeca9bda7e5/dictionary.csv", true);
-    request.onreadystatechange = function() {
-        if (this.readyState === 4 && this.status === 200) {
-            lines = this.responseText.split("\n");
+    let csv = localStorage.getItem('csv'); // get the CSV from local storage
+    removeContainer();
+    if (csv) {
+        lines = csv.split("\n");
+        game(lines,num);
+    }
+    else {
+        // If CSV is not provided by user, use the default
+        const request = new XMLHttpRequest();
+        request.open("GET", 'https://gist.githubusercontent.com/taroj1205/420c2e76184a47b18543c52ba229f510/raw/adcef62cf11593879be2ed1d715daeeca9bda7e5/dictionary.csv', true);
+        request.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                lines = this.responseText.split("\n");
 
-            gameText.style.display = "block";
-            startMenuText.style.display = "none";
-            playerText.style.display = "block";
-            historyText.style.display = "block";
-            resetText.style.display = "block";
-            wordsText.style.display = "block";
+                game(lines,num);
 
-            newWord();
+            }
+        else if (this.readyState === XMLHttpRequest.DONE && this.status !== 200) {
+            document.querySelector('body').innerHTML = '<h1 style="text-align: center; font-size: 10vh;">Offline contact <a href="https://twitter.com/taroj1205">@taroj1205</a></h1>';
+        }
+        };
+        request.send();
+    }
+}
 
-            document.addEventListener("keypress", function(event) {
-                let key = event.key;
-                console.log(num, currentWordEN[num], currentWordEN, currentWordJA);
+function game(lines,num)
+{
+    gameText.style.display = "block";
+    startMenuText.style.display = "none";
+    playerText.style.display = "block";
+    historyText.style.display = "block";
+    resetText.style.display = "block";
+    wordsText.style.display = "block";
+    uploadCSVButton.style.display = "none";
 
-                if (key === currentWordEN[num]) {
-                    num++;
-                    const typedOut = "<span style='color: grey;' id='typedOut'>" + currentWordEN.substring(0, num) + "</span>";
-                    const notYet = "<span style='color: #1fd755;' id='notYet'>" + currentWordEN.substring(num) + "</span>";
-                    document.querySelector("#en").innerHTML = typedOut + notYet;
+    newWord();
 
-                    if (num >= currentWordEN.length) {
-                        num = 0;
-                        const p = document.createElement('p');
-                        p.innerHTML = currentWordEN + ': ' + currentWordJA;
-                        document.getElementById('history').insertBefore(p, document.getElementById('history').firstChild);
-                        submitData(currentWordEN, currentWordJA);
-                        newWord();
-                    }
-                }
+    document.addEventListener("keypress", function(event) {
+        let key = event.key;
+        console.log(num, currentWordEN[num], currentWordEN, currentWordJA);
+
+        if (key === currentWordEN[num]) {
+            num++;
+            const typedOut = "<span style='color: grey;' id='typedOut'>" + currentWordEN.substring(0, num) + "</span>";
+            const notYet = "<span style='color: #1fd755;' id='notYet'>" + currentWordEN.substring(num) + "</span>";
+            document.querySelector("#en").innerHTML = typedOut + notYet;
+
+            if (num >= currentWordEN.length) {
+                num = 0;
+                const p = document.createElement('p');
+                p.innerHTML = currentWordEN + ': ' + currentWordJA;
+                document.getElementById('history').insertBefore(p, document.getElementById('history').firstChild);
+                submitData(currentWordEN, currentWordJA);
+                newWord();
+            }
+        }
                 else {
                     const typedOut = "<span style='color: grey;' id='typedOut'>" + currentWordEN.substring(0, num) + "</span>";
                     const notYet = "<span style='color: #e06c75;' id='notYet'>" + currentWordEN.substring(num) + "</span>";
                     document.querySelector("#en").innerHTML = typedOut + notYet;
                 }
-            });
-
-        }
-        else if (this.readyState === XMLHttpRequest.DONE && this.status !== 200) {
-            document.querySelector('body').innerHTML = '<h1 style="text-align: center; font-size: 10vh;">Offline contact <a href="https://twitter.com/taroj1205">@taroj1205</a></h1>';
-        }
-    };
-    request.send();
+    });
 }
 
 // Send data
@@ -200,3 +216,47 @@ function resetHistory() {
     };
     xhr.send("username=" + username + "&password=" + password);
 }
+
+function openFilePicker() {
+    const input = document.createElement('textarea');
+    input.rows = 10;
+    input.cols = 50;
+    input.value = localStorage.getItem('csv');
+    input.placeholder = 'Paste CSV here...';
+    const submit = document.createElement('button');
+    submit.innerText = 'Submit';
+    submit.onclick = function() {
+        const csv = input.value.trim();
+        if (csv.length == 0) {
+            if (confirm("Are you sure you want to reset the CSV?")) {
+                localStorage.removeItem('csv');
+                alert('Done a csv reset!');
+                removeContainer();
+            }
+        } else {
+            const lines = csv.split('\n');
+            const firstLine = lines[0].trim();
+            const lastLine = lines[lines.length - 1].trim();
+            const numColsFirstLine = firstLine.split(',').length;
+            const numColsLastLine = lastLine.split(',').length;
+            if (numColsFirstLine > 1 && numColsFirstLine == numColsLastLine) {
+                localStorage.setItem('csv', csv); // store the CSV in local storage
+                alert('CSV file saved to local storage! ' + csv);
+                removeContainer();
+            } else {
+                alert('The input is not a valid CSV file!');
+            }
+        }
+    };
+    const container = document.createElement('div');
+    container.id = 'csv'; // add "csv" class to the container element
+    container.style.position = 'absolute';
+    container.appendChild(input);
+    container.appendChild(submit);
+    document.body.appendChild(container);
+}
+
+const removeContainer = () => {
+    const container = document.getElementById('csv');
+    container.remove();
+};
