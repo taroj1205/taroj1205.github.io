@@ -225,6 +225,11 @@ button {
         width: 90vw;
         z-index: -1;
     }
+
+    #startMenu form {
+        top: 100px;
+        position: absolute;
+    }
 }
 
 #player {
