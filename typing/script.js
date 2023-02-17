@@ -155,11 +155,11 @@ function game(lines,num)
                 newWord();
             }
         }
-                else {
-                    const typedOut = "<span style='color: grey;' id='typedOut'>" + currentWordEN.substring(0, num) + "</span>";
-                    const notYet = "<span style='color: #e06c75;' id='notYet'>" + currentWordEN.substring(num) + "</span>";
-                    document.querySelector("#en").innerHTML = typedOut + notYet;
-                }
+        else {
+            const typedOut = "<span style='color: grey;' id='typedOut'>" + currentWordEN.substring(0, num) + "</span>";
+            const notYet = "<span style='color: #e06c75;' id='notYet'>" + currentWordEN.substring(num) + "</span>";
+            document.querySelector("#en").innerHTML = typedOut + notYet;
+        }
     });
 }
 
