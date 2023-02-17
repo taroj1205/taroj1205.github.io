@@ -11,6 +11,7 @@ menuToggle = document.getElementById("menu-toggle");
 historyMenu = document.getElementById("history-menu");
 historyMenuButton = document.getElementById("menu-toggle");
 submitButton = document.getElementById("username-submit");
+scrollToTopButton = document.getElementById("scroll-to-top-button");
 
 num = 0;
 
@@ -312,9 +313,8 @@ function scrollToTop() {
     });
 }
 
-const scrollToTopButton = document.getElementById("scroll-to-top-button");
-
 window.addEventListener("scroll", function() {
+    console.log("scroll event");
     if (window.pageYOffset > 200) {
         scrollToTopButton.classList.add("show");
     } else {
