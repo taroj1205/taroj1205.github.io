@@ -222,7 +222,7 @@ function openFilePicker() {
     input.rows = 10;
     input.cols = 50;
     input.value = localStorage.getItem('csv');
-    input.placeholder = 'Paste CSV here...';
+    input.placeholder = 'Paste CSV here...\nExample:\na,あ\ni,い';
     const submit = document.createElement('button');
     submit.innerText = 'Submit';
     submit.onclick = function() {
@@ -239,12 +239,12 @@ function openFilePicker() {
             const lastLine = lines[lines.length - 1].trim();
             const numColsFirstLine = firstLine.split(',').length;
             const numColsLastLine = lastLine.split(',').length;
-            if (numColsFirstLine > 1 && numColsFirstLine == numColsLastLine) {
+            if (numColsFirstLine > 1 && numColsFirstLine === numColsLastLine) {
                 localStorage.setItem('csv', csv); // store the CSV in local storage
                 alert('CSV file saved to local storage! ' + csv);
                 removeContainer();
             } else {
-                alert('The input is not a valid CSV file!');
+                alert('The input is not a valid CSV file!\nExample:\na,あ\ni,い');
             }
         }
     };
