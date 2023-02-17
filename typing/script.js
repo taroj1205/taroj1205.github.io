@@ -17,6 +17,10 @@ num = 0;
 window.onload = function() {
     usernameText.value = localStorage.getItem('username');
     passwordText.value = localStorage.getItem('password');
+    if (window.matchMedia("(min-width: 800px)").matches) {
+        const usernameInput = document.querySelector("#username");
+        usernameInput.focus();
+    }
 };
 
 // Check if the username and password match a stored database
@@ -122,6 +126,11 @@ function game(lines,num)
     resetText.style.display = "inline-block";
     wordsText.style.display = "inline-block";
     uploadCSVButton.style.display = "none";
+
+    if (window.matchMedia("(max-width: 800px)").matches) {
+        const game_input = document.querySelector("#en-input");
+        game_input.focus();
+    }
 
     document.querySelector('body').classList.add('run');
 

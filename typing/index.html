@@ -14,8 +14,8 @@
     </div>
     <section id="startMenu">
         <form name="enter_username">
-            <input type="text" name="username" id="username" required autofocus placeholder="username">
-            <input type="text" name="password" id="password" required placeholder="password">
+            <input type="text" name="username" id="username" required autocomplete="username" placeholder="username">
+            <input type="password" name="password" id="password" required placeholder="password">
             <br>
             <input type="submit" value="Submit" id="username-submit">
         </form>
@@ -26,7 +26,7 @@
         <p id="ja"></p>
         <p id="en"></p>
         <p id="words"></p>
-        <input type="text" id="en-input" autofocus style="display:none;">
+        <input type="text" id="en-input" style="display:none;">
     </section>
     <button id="reset" onclick="resetHistory()">Reset History</button>
 </main>

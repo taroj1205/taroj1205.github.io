@@ -106,7 +106,7 @@ button {
     height: 20vh;
 }
 
-#startMenu form input[type="text"] {
+#startMenu form input[type="text"], #startMenu form input[type="password"] {
     font-size: 2.5vw;
     padding: 1vw;
     width: 50%;
@@ -131,7 +131,7 @@ button {
         font-size: 1rem;
     }
 
-    #startMenu form input[type="text"] {
+    #startMenu form input[type="text"], #startMenu form input[type="password"] {
         font-size: 1.5rem;
     }
 
@@ -212,7 +212,7 @@ button {
     font-size: 1.2vw;
     background-color: rgb(15, 15, 15);
     top: -10px;
-    right: 10px;;
+    right: 10px;
 }
 
 #game {
