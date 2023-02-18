@@ -49,10 +49,14 @@ body {
     height: 100%;
 }
 
-#upload-csv {
+#upload-csv, #csv {
     top: 0;
     left: 0;
     position: absolute;
+}
+
+#csv {
+    z-index: 9999999999999;
 }
 
 #words {
