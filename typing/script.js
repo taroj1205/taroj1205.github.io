@@ -14,8 +14,13 @@ submitButton = document.getElementById("username-submit");
 scrollToTopButton = document.getElementById("scroll-to-top-button");
 usernameInput = document.querySelector("#username");
 passwordInput = document.querySelector("#password");
+switchFurigana = document.querySelector(".switch input");
 
 num = 0;
+
+var switchEl = document.querySelector('.switch input');
+var furiganaSettings = localStorage.getItem("furiganaSettings");
+var furiganaText = document.getElementById("furigana");
 
 window.onload = function() {
     usernameText.value = localStorage.getItem('username');
@@ -27,12 +32,21 @@ window.onload = function() {
     {
         passwordInput.focus();
     }
+
+    var furiganaSettings = localStorage.getItem(furiganaSettings);
+    if (furiganaSettings === "off") {
+        switchEl.checked = false;
+        localStorage.setItem("off", furiganaSettings);
+    } if (furiganaSettings == "on") {
+        switchEl.checked = true;
+        localStorage.setItem("on", furiganaSettings);
+    }
 };
 
 // Check if the username and password match a stored database
 function checkCredentials(username, password) {
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://taroj1205.pythonanywhere.com/check", true);
+    xhr.open("POST", "http://172.29.64.27:5000/check", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -94,10 +108,74 @@ function newWord() {
     currentWordEN = en;
     currentWordJA = ja;
 
+    if (localStorage.getItem(furiganaSettings) === "on")
+    {
+        extractKanji(ja);
+    }
+
     document.querySelector("#ja").innerHTML = ja;
     document.querySelector("#en").innerHTML = "<span style='color: white;'>" + en + "</span>";
 }
 
+function extractKanji(ja) {
+    if (ja) {
+        // Use a regular expression to match words in the Japanese text
+        const words = ja.match(/[\p{Script=Han}]+/ug);
+        if (words)
+        {
+            console.log("words:", words);
+            const data = { ja: ja, kanji: words.filter(word => /[\p{Script=Han}]+/u.test(word)) };
+            console.log(data);
+            furigana(data);
+        }
+    }
+}
+
+function furigana(data) {
+    // Create a new XMLHttpRequest object
+    const xhr = new XMLHttpRequest();
+
+    // Set the request method and URL
+    xhr.open("POST", "http://172.29.64.27:5000/furigana", true);
+
+    // Set the request header (if needed)
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    // Set the data to send (in this example, a JSON object)
+    const json = JSON.stringify(data);
+
+    // Set the function to execute when the server responds
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const furigana = JSON.parse(xhr.responseText);
+            console.log(furigana);
+            displayFurigana(data, furigana);
+        }
+    };
+    // Send the request
+    xhr.send(json);
+}
+
+function displayFurigana(data, furigana) {
+    console.log('displayFurigana:', data, furigana);
+    let html = "";
+    const ja = data.ja;
+    const kanji = data.kanji;
+    let furiganaIndex = 0;
+
+    for (let i = 0; i < ja.length; i++) {
+        const char = ja[i];
+        if (kanji.includes(char)) {
+            console.log('ruby:', char, furigana[furiganaIndex]);
+            html += `<ruby>${char}<rt id="furigana">${furigana[furiganaIndex]}</rt></ruby>`;
+            furiganaIndex++;
+        } else {
+            html += char;
+        }
+    }
+
+    document.querySelector("#ja").innerHTML = html;
+}
 
 function start() {
     let num = 0;
@@ -178,7 +256,7 @@ function submitData(currentWordEN, currentWordJA) {
     let en = currentWordEN;
     let ja = currentWordJA;
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://taroj1205.pythonanywhere.com', true);
+    xhr.open('POST', 'http://172.29.64.27:5000', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -199,7 +277,7 @@ function submitData(currentWordEN, currentWordJA) {
 function getData() {
     const xhr = new XMLHttpRequest();
     const username = localStorage.getItem('username');
-    xhr.open('GET', 'https://taroj1205.pythonanywhere.com/data/' + username, true);
+    xhr.open('GET', 'http://172.29.64.27:5000/data/' + username, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -226,7 +304,7 @@ function resetHistory() {
         return;
     }
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://taroj1205.pythonanywhere.com/reset", true);
+    xhr.open("POST", "http://172.29.64.27:5000/reset", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -326,43 +404,24 @@ const removeContainer = () => {
     }
 };
 
-let isInputFocused = false;
+let isInputFocused = true;
 const enInput = document.getElementById("en-input");
-
-function toggleInputFocus() {
-    if (isInputFocused) {
-        enInput.blur();
-    } else {
-        enInput.focus();
-    }
-    isInputFocused = !isInputFocused;
-}
 
 menuToggle.addEventListener("click", function() {
     historyMenu.style.display = (historyMenu.style.display === "inline-block") ? "none" : "inline-block";
-    toggleInputFocus();
+    enInput.style.display = (enInput.style.display === "block") ? "none" : "block";
 });
 
 document.addEventListener('click', function(event) {
     if (document.activeElement.id === 'en-input') {
         event.preventDefault();
     } else {
-        toggleInputFocus();
+        enInput.focus();
     }
 }, { passive: false });
 
-function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
-
-historyMenu.addEventListener("scroll", function() {
-    console.log("scroll event");
-    if (window.pageYOffset > 10) {
-        scrollToTopButton.classList.add("show");
-    } else {
-        scrollToTopButton.classList.remove("show");
-    }
+switchFurigana.addEventListener('change', e => {
+    set = e.target.checked ? 'off' : 'on';
+    localStorage.setItem(furiganaSettings, set);
+    switchEl.checked = e.target.checked ? true : false;
 });
