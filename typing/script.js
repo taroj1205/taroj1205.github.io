@@ -12,15 +12,20 @@ historyMenu = document.getElementById("history-menu");
 historyMenuButton = document.getElementById("menu-toggle");
 submitButton = document.getElementById("username-submit");
 scrollToTopButton = document.getElementById("scroll-to-top-button");
+usernameInput = document.querySelector("#username");
+passwordInput = document.querySelector("#password");
 
 num = 0;
 
 window.onload = function() {
     usernameText.value = localStorage.getItem('username');
     passwordText.value = localStorage.getItem('password');
-    if (window.matchMedia("(min-width: 800px)").matches) {
-        const usernameInput = document.querySelector("#username");
+    if (window.matchMedia("(min-width: 800px)").matches || !usernameText) {
         usernameInput.focus();
+    }
+    else if (!passwordText)
+    {
+        passwordInput.focus();
     }
 };
 
@@ -217,6 +222,9 @@ function getData() {
 function resetHistory() {
     let password = prompt("Please enter your password to reset history:");
     let username = document.getElementById('player').innerText.split(': ')[1];
+    if (password === null) {
+        return;
+    }
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "https://taroj1205.pythonanywhere.com/reset", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
