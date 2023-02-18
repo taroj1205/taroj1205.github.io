@@ -128,37 +128,42 @@ function game(lines,num)
     wordsText.style.display = "inline-block";
     uploadCSVButton.style.display = "none";
 
-    if (window.matchMedia("(max-width: 800px)").matches) {
-        document.getElementById("en-input").focus();
-    }
+    const enInput = document.getElementById("en-input")
+    enInput.focus();
 
     document.querySelector('body').classList.add('run');
 
     newWord();
 
-    document.addEventListener("keypress", function(event) {
-        let key = event.key;
-        console.log(num, currentWordEN[num], currentWordEN, currentWordJA);
+    enInput.addEventListener("input", function(event) {
+        if (event.inputType === "insertText") {
+            let key = event.data;
+            enInput.value = "";
+            console.log(num, currentWordEN[num], currentWordEN, currentWordJA);
 
-        if (key === currentWordEN[num]) {
-            num++;
-            const typedOut = "<span style='color: grey;' id='typedOut'>" + currentWordEN.substring(0, num) + "</span>";
-            const notYet = "<span style='color: #1fd755;' id='notYet'>" + currentWordEN.substring(num) + "</span>";
-            document.querySelector("#en").innerHTML = typedOut + notYet;
+            if (key === currentWordEN[num]) {
+                num++;
+                const typedOut = "<span style='color: grey;' id='typedOut'>" + currentWordEN.substring(0, num) + "</span>";
+                const notYet = "<span style='color: #1fd755;' id='notYet'>" + currentWordEN.substring(num) + "</span>";
+                document.querySelector("#en").innerHTML = typedOut + notYet;
 
-            if (num >= currentWordEN.length) {
-                num = 0;
-                const p = document.createElement('p');
-                p.innerHTML = currentWordEN + ': ' + currentWordJA;
-                document.getElementById('history').insertBefore(p, document.getElementById('history').firstChild);
-                submitData(currentWordEN, currentWordJA);
-                newWord();
+                if (num >= currentWordEN.length) {
+                    num = 0;
+                    const p = document.createElement('p');
+                    p.innerHTML = currentWordEN + ': ' + currentWordJA;
+                    document.getElementById('history').insertBefore(p, document.getElementById('history').firstChild);
+                    submitData(currentWordEN, currentWordJA);
+                    newWord();
+                }
+            }
+            else {
+                const typedOut = "<span style='color: grey;' id='typedOut'>" + currentWordEN.substring(0, num) + "</span>";
+                const notYet = "<span style='color: #e06c75;' id='notYet'>" + currentWordEN.substring(num) + "</span>";
+                document.querySelector("#en").innerHTML = typedOut + notYet;
             }
         }
         else {
-            const typedOut = "<span style='color: grey;' id='typedOut'>" + currentWordEN.substring(0, num) + "</span>";
-            const notYet = "<span style='color: #e06c75;' id='notYet'>" + currentWordEN.substring(num) + "</span>";
-            document.querySelector("#en").innerHTML = typedOut + notYet;
+            return;
         }
     });
 }
