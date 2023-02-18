@@ -234,7 +234,7 @@ button {
     }
 
     #startMenu form {
-        top: 400px !important;
+        margin-top: -500px !important;
         position: absolute;
     }
 
