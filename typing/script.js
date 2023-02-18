@@ -240,43 +240,70 @@ function resetHistory() {
 }
 
 function openFilePicker() {
-    const input = document.createElement('textarea');
-    input.rows = 10;
-    input.cols = 50;
-    input.value = localStorage.getItem('csv');
-    input.placeholder = 'Paste CSV here...\nExample:\na,あ\ni,い';
-    const submit = document.createElement('button');
-    submit.innerText = 'Submit';
-    submit.onclick = function() {
-        const csv = input.value.trim();
-        if (csv.length == 0) {
-            if (confirm("Are you sure you want to reset the CSV?")) {
-                localStorage.removeItem('csv');
-                alert('Done a csv reset!');
-                removeContainer();
-            }
-        } else {
-            const lines = csv.split('\n');
-            const firstLine = lines[0].trim();
-            const lastLine = lines[lines.length - 1].trim();
-            const numColsFirstLine = firstLine.split(',').length;
-            const numColsLastLine = lastLine.split(',').length;
-            if (numColsFirstLine > 1 && numColsFirstLine === numColsLastLine) {
-                localStorage.setItem('csv', csv); // store the CSV in local storage
-                alert('CSV file saved to local storage! ' + csv);
-                removeContainer();
+    // toggle the start menu
+    startMenuText.style.display = (startMenuText.style.display === "flex") ? "none" : "flex";
+
+    if (!document.getElementById('csv')) {
+        // create the file picker elements
+        const input = document.createElement('textarea');
+        input.rows = 10;
+        input.cols = 50;
+        input.value = localStorage.getItem('csv');
+        input.placeholder = 'Paste CSV here...\nExample:\na,あ\ni,い';
+
+        const submit = document.createElement('button');
+        submit.innerText = 'Submit';
+        submit.onclick = function() {
+            // process the submitted CSV
+            const csv = input.value.trim();
+            if (csv.length == 0) {
+                if (confirm("Are you sure you want to reset the CSV?")) {
+                    localStorage.removeItem('csv');
+                    alert('Done a csv reset!');
+                    removeContainer();
+                }
             } else {
-                alert('The input is not a valid CSV file!\nExample:\na,あ\ni,い');
+                const lines = csv.split('\n');
+                const firstLine = lines[0].trim();
+                const lastLine = lines[lines.length - 1].trim();
+                const numColsFirstLine = firstLine.split(',').length;
+                const numColsLastLine = lastLine.split(',').length;
+                if (numColsFirstLine > 1 && numColsFirstLine === numColsLastLine) {
+                    localStorage.setItem('csv', csv); // store the CSV in local storage
+                    alert('CSV file saved to local storage! ' + csv);
+                    removeContainer();
+                } else {
+                    alert('The input is not a valid CSV file!\nExample:\na,あ\ni,い');
+                }
             }
-        }
-    };
-    const container = document.createElement('div');
-    container.id = 'csv'; // add "csv" class to the container element
-    container.style.position = 'absolute';
-    container.appendChild(input);
-    container.appendChild(submit);
-    document.body.appendChild(container);
+        };
+
+        const cancel = document.createElement('button');
+        cancel.innerText = 'Cancel';
+        cancel.onclick = function() {
+            removeContainer();
+        };
+
+        // create the container element
+        const container = document.createElement('div');
+        container.id = 'csv'; // add "csv" class to the container element
+        container.style.position = 'absolute';
+        container.appendChild(input);
+        container.appendChild(submit);
+        container.appendChild(cancel);
+        document.body.appendChild(container);
+    }
+
+    function removeContainer() {
+        // remove the file picker elements
+        const container = document.getElementById('csv');
+        container.parentNode.removeChild(container);
+
+        // toggle the start menu display
+        startMenuText.style.display = (startMenuText.style.display === "none") ? "flex" : "none";
+    }
 }
+
 
 const removeContainer = () => {
     const container = document.getElementById('csv');
