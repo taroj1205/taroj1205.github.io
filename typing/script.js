@@ -242,13 +242,15 @@ function resetHistory() {
 function openFilePicker() {
     // toggle the start menu
     startMenuText.style.display = (startMenuText.style.display === "flex") ? "none" : "flex";
+    uploadCSVButton.style.display = (uploadCSVButton.style.display === "block") ? "none" : "block";
 
     if (!document.getElementById('csv')) {
         // create the file picker elements
         const input = document.createElement('textarea');
         input.rows = 10;
         input.cols = 50;
-        input.style.width = '100%';
+        input.style.width = '60vw';
+        input.style.height = '50vh';
         input.value = localStorage.getItem('csv');
         input.placeholder = 'Paste CSV here...\nExample:\na,あ\ni,い';
 
@@ -289,8 +291,8 @@ function openFilePicker() {
         const container = document.createElement('div');
         container.id = 'csv'; // add "csv" class to the container element
         container.style.position = 'absolute';
-        container.appendChild(document.createElement("br"));
         container.appendChild(input);
+        container.appendChild(document.createElement("br"));
         container.appendChild(submit);
         container.appendChild(cancel);
         document.body.appendChild(container);
@@ -303,6 +305,7 @@ function openFilePicker() {
 
         // toggle the start menu display
         startMenuText.style.display = (startMenuText.style.display === "none") ? "flex" : "none";
+        uploadCSVButton.style.display = (uploadCSVButton.style.display === "none") ? "block" : "none";
     }
 }
 
