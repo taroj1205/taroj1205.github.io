@@ -109,6 +109,7 @@ function start() {
         request.onreadystatechange = function() {
             if (this.readyState === 4 && this.status === 200) {
                 lines = this.responseText.split("\n");
+                localStorage.setItem('csv', this.responseText); // store the CSV in local storage
                 game(lines,num);
             }
         else if (this.readyState === XMLHttpRequest.DONE && this.status !== 200) {
@@ -247,6 +248,7 @@ function openFilePicker() {
         const input = document.createElement('textarea');
         input.rows = 10;
         input.cols = 50;
+        input.style.width = '100%';
         input.value = localStorage.getItem('csv');
         input.placeholder = 'Paste CSV here...\nExample:\na,あ\ni,い';
 
@@ -287,6 +289,7 @@ function openFilePicker() {
         const container = document.createElement('div');
         container.id = 'csv'; // add "csv" class to the container element
         container.style.position = 'absolute';
+        container.appendChild(document.createElement("br"));
         container.appendChild(input);
         container.appendChild(submit);
         container.appendChild(cancel);
@@ -344,9 +347,9 @@ function scrollToTop() {
     });
 }
 
-window.addEventListener("scroll", function() {
+historyMenu.addEventListener("scroll", function() {
     console.log("scroll event");
-    if (window.pageYOffset > 200) {
+    if (window.pageYOffset > 10) {
         scrollToTopButton.classList.add("show");
     } else {
         scrollToTopButton.classList.remove("show");
