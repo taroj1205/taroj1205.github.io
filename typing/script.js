@@ -138,7 +138,6 @@ function game(lines,num)
     enInput.addEventListener("input", function(event) {
         if (event.inputType === "insertText") {
             let key = event.data;
-            enInput.value = "";
             console.log(num, currentWordEN[num], currentWordEN, currentWordJA);
 
             if (key === currentWordEN[num]) {
