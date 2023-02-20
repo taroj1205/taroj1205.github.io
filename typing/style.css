@@ -42,13 +42,16 @@
     #words {
         transform: translate(-50%, 100%);
     }
+
+    body {
+        height: 100%;
+    }
 }
 
 body {
     background-color: rgb(15, 15, 15);
     color: white;
     font-family: 'Noto Sans JP', 'Ui Gothic', 'Consolas', 'Arial', sans-serif;
-    height: 100%;
     width: 100%;
     top: 0;
     left: 0;
@@ -154,7 +157,7 @@ button {
     #startMenu form {
         flex-direction: column;
         display: block;
-        margin-top: -150px  !important;
+        margin-top: 550px  !important;
         position: absolute;
     }
 
@@ -173,13 +176,13 @@ button {
     }
 
     body {
-        height: 100vh;
+        height: 60%;
     }
 
     #history {
         font-size: 4vw;
         text-align: center;
-        height: 100vh;
+        height: 60%;
         overflow: auto !important;
     }
 
