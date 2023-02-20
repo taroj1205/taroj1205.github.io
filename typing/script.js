@@ -14,8 +14,11 @@ submitButton = document.getElementById("username-submit");
 scrollToTopButton = document.getElementById("scroll-to-top-button");
 usernameInput = document.querySelector("#username");
 passwordInput = document.querySelector("#password");
+switchFurigana = document.querySelector(".switch input");
 
 num = 0;
+
+var switchEl = document.querySelector('.switch input');
 
 window.onload = function() {
     usernameText.value = localStorage.getItem('username');
@@ -27,12 +30,29 @@ window.onload = function() {
     {
         passwordInput.focus();
     }
+
+    var furiganaSettings = localStorage.getItem("furiganaSettings");
+    if (furiganaSettings)
+    {
+        if (furiganaSettings === "off") {
+        switchEl.checked = true;
+        localStorage.setItem("off", furiganaSettings);
+        } if (furiganaSettings === "on") {
+            switchEl.checked = false;
+            localStorage.setItem("on", furiganaSettings);
+        }
+        console.log("furigana settings:", furiganaSettings);
+    } if (!furiganaSettings)
+    {
+        localStorage.setItem("furiganaSettings", "off");
+        switchEl.checked = true;
+    }
 };
 
 // Check if the username and password match a stored database
 function checkCredentials(username, password) {
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://taroj1205.pythonanywhere.com/check", true);
+    xhr.open("POST", "https://taroj1205.pythonanywhere.com//check", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -94,10 +114,41 @@ function newWord() {
     currentWordEN = en;
     currentWordJA = ja;
 
+    if (localStorage.getItem("furiganaSettings") === "on")
+    {
+        const words = ja.match(/[\p{Script=Han}]+/ug);
+        if (words)
+        {
+            furigana(ja);
+        }
+    }
+
     document.querySelector("#ja").innerHTML = ja;
     document.querySelector("#en").innerHTML = "<span style='color: white;'>" + en + "</span>";
 }
 
+// Check if the username and password match a stored database
+function furigana(ja) {
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://taroj1205.pythonanywhere.com//furigana", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                displayFurigana(response);
+            } else {
+                document.querySelector('body').innerHTML = '<h1 style="text-align: center; font-size: 10vh;">Offline contact <a href="https://twitter.com/taroj1205">@taroj1205</a></h1>';
+            }
+        }
+    };
+    xhr.send("word=" + encodeURIComponent(ja));
+}
+
+function displayFurigana(response) {
+    console.log(response);
+    document.querySelector("#ja").innerHTML = response;
+}
 
 function start() {
     let num = 0;
@@ -178,7 +229,7 @@ function submitData(currentWordEN, currentWordJA) {
     let en = currentWordEN;
     let ja = currentWordJA;
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://taroj1205.pythonanywhere.com', true);
+    xhr.open('POST', 'https://taroj1205.pythonanywhere.com/', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -199,7 +250,7 @@ function submitData(currentWordEN, currentWordJA) {
 function getData() {
     const xhr = new XMLHttpRequest();
     const username = localStorage.getItem('username');
-    xhr.open('GET', 'https://taroj1205.pythonanywhere.com/data/' + username, true);
+    xhr.open('GET', 'https://taroj1205.pythonanywhere.com//data/' + username, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -226,7 +277,7 @@ function resetHistory() {
         return;
     }
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://taroj1205.pythonanywhere.com/reset", true);
+    xhr.open("POST", "https://taroj1205.pythonanywhere.com//reset", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -326,43 +377,21 @@ const removeContainer = () => {
     }
 };
 
-let isInputFocused = false;
 const enInput = document.getElementById("en-input");
-
-function toggleInputFocus() {
-    if (isInputFocused) {
-        enInput.blur();
-    } else {
-        enInput.focus();
-    }
-    isInputFocused = !isInputFocused;
-}
 
 menuToggle.addEventListener("click", function() {
     historyMenu.style.display = (historyMenu.style.display === "inline-block") ? "none" : "inline-block";
-    toggleInputFocus();
+    enInput.style.display = (enInput.style.display === "block") ? "none" : "block";
+    if (enInput.style.display === "block")
+        {
+            enInput.focus();
+            console.log("Focus changed!");
+        }
 });
 
-document.addEventListener('click', function(event) {
-    if (document.activeElement.id === 'en-input') {
-        event.preventDefault();
-    } else {
-        toggleInputFocus();
-    }
-}, { passive: false });
-
-function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
-
-historyMenu.addEventListener("scroll", function() {
-    console.log("scroll event");
-    if (window.pageYOffset > 10) {
-        scrollToTopButton.classList.add("show");
-    } else {
-        scrollToTopButton.classList.remove("show");
-    }
+switchFurigana.addEventListener('change', e => {
+    console.log("buttonc lcikcckceck");
+    let set = e.target.checked ? 'off' : 'on';
+    localStorage.setItem("furiganaSettings", set);
+    switchEl.checked = !!e.target.checked;
 });
