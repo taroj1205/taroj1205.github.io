@@ -67,7 +67,7 @@ rt {
     font-size: 50%;
 }
 
-#upload-csv {
+#upload-csv, #reset {
     font-size: 1rem;
     height: auto;
 }
