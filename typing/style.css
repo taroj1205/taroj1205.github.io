@@ -58,7 +58,6 @@ ruby {
     ruby-position: over;
     ruby-align: center;
     white-space: nowrap;
-    margin-top: -0.5em;
 }
 
 rt {
@@ -289,6 +288,7 @@ button {
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
+    margin-top: 23px;
 }
 
 .switch {
