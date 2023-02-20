@@ -34,11 +34,11 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        }
+    }
 
-        #scroll-to-top-button {
-            display: none;
-        }
+    #scroll-to-top-button {
+        display: none;
+    }
 
     #words {
         transform: translate(-50%, 100%);
@@ -110,7 +110,7 @@ button {
 
 #history {
     text-align: left;
-    overflow: auto;
+    overflow-y: auto !important;
     height: calc(100% - 4rem);
 }
 
@@ -172,7 +172,6 @@ button {
         font-size: 4vw;
         text-align: center;
         height: 100vh;
-        overflow-y: auto !important;
     }
 
     #history::-webkit-scrollbar {
@@ -279,7 +278,7 @@ button {
 }
 
 #en {
-    font-size: 10vw;
+    font-size: 9vw;
     text-align: center;
     position: fixed;
     transform: translate(-50%, -140%);
