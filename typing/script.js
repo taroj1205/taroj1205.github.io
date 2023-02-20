@@ -15,6 +15,7 @@ scrollToTopButton = document.getElementById("scroll-to-top-button");
 usernameInput = document.querySelector("#username");
 passwordInput = document.querySelector("#password");
 switchFurigana = document.querySelector(".switch input");
+enInput = document.getElementById("en-input")
 
 num = 0;
 
@@ -185,7 +186,6 @@ function game(lines,num)
     wordsText.style.display = "inline-block";
     uploadCSVButton.style.display = "none";
 
-    const enInput = document.getElementById("en-input")
     enInput.focus();
 
     document.querySelector('body').classList.add('run');
@@ -377,8 +377,6 @@ const removeContainer = () => {
     }
 };
 
-const enInput = document.getElementById("en-input");
-
 menuToggle.addEventListener("click", function() {
     historyMenu.style.display = (historyMenu.style.display === "inline-block") ? "none" : "inline-block";
     enInput.style.display = (enInput.style.display === "block") ? "none" : "block";
@@ -394,4 +392,11 @@ switchFurigana.addEventListener('change', e => {
     let set = e.target.checked ? 'off' : 'on';
     localStorage.setItem("furiganaSettings", set);
     switchEl.checked = !!e.target.checked;
+});
+
+document.addEventListener("keydown", function(event) {
+    enInput.focus();
+    enInput.value += event.key;
+    var inputEvent = new InputEvent('input', {bubbles: true});
+    enInput.dispatchEvent(inputEvent);
 });

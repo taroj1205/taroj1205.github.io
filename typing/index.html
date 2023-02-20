@@ -24,12 +24,11 @@
     <button id="upload-csv" onclick="openFilePicker()" style="display:block;">Upload or Copy-Paste CSV File</button>
     <section id="game">
         <p id="ja"></p>
-        <p id="en"></p>
+        <p id="en" onclick='setTimeout("enInput.focus()", 0);'></p>
         <p id="words"></p>
-        <input onblur="this.focus()" type="password" id="en-input" style="opacity: 0; position: absolute; left: -9999px; top: 0; display: block;" autocomplete="off">
+        <input type="password" id="en-input" style="opacity: 0; position: absolute; left: -9999px; top: 0; display: block;" autofocus autocomplete="off">
     </section>
     <button id="reset" onclick="resetHistory()">Reset History</button>
-    <button id="scroll-to-top-button" onclick="scrollToTop()">Scroll to Top</button>
 </main>
 <p id="player"></p>
 <div class="switch" id="furiganaSettings">
