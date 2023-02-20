@@ -67,6 +67,11 @@ rt {
     font-size: 50%;
 }
 
+#upload-csv {
+    font-size: 1rem;
+    height: auto;
+}
+
 #upload-csv, #csv {
     top: 0;
     left: 0;
