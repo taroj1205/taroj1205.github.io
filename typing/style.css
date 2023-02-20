@@ -157,7 +157,7 @@ button {
     #startMenu form {
         flex-direction: column;
         display: block;
-        margin-top: 550px  !important;
+        margin-top: -330px  !important;
         position: absolute;
     }
 
