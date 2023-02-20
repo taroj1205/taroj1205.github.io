@@ -15,7 +15,6 @@
     #history {
         font-size: 1.2rem;
         height: 95vh !important;
-        overflow: auto;
         display: inline-block !important;
     }
 
@@ -51,7 +50,6 @@ body {
     font-family: 'Noto Sans JP', 'Ui Gothic', 'Consolas', 'Arial', sans-serif;
     height: 100vh;
     width: 100vw;
-    overflow: hidden;
     top: 0;
     left: 0;
     position: fixed;
@@ -112,8 +110,8 @@ button {
 
 #history {
     text-align: left;
-    overflow-y: auto !important;
     height: calc(100% - 4rem);
+    overflow-y: auto !important;
 }
 
 #history-menu {
