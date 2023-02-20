@@ -15,7 +15,7 @@
 
     #history {
         font-size: 1.2rem;
-        height: 95vh !important;
+        height: 95% !important;
         display: inline-block !important;
     }
 
@@ -88,7 +88,7 @@ rt {
 
 #game_window {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     margin: auto;
     text-align: center;
     color: white;
@@ -101,7 +101,7 @@ rt {
 
 #startMenu {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -137,7 +137,7 @@ button {
 
 #startMenu form {
     display: block;
-    height: 20vh;
+    height: 20%;
 }
 
 #startMenu form input[type="text"], #startMenu form input[type="password"] {
@@ -176,13 +176,13 @@ button {
     }
 
     body {
-        height: 60%;
+        height: 99%;
     }
 
     #history {
         font-size: 4vw;
         text-align: center;
-        height: 60%;
+        height: 99%;
         overflow: auto !important;
     }
 
