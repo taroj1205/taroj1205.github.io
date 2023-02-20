@@ -23,7 +23,7 @@
         position: fixed;
         font-size: 1vw;
         text-align: right;
-        left: 0;
+        right: 0;
         bottom: 0;
         display: none;
     }
@@ -35,7 +35,6 @@
         left: 50%;
         transform: translate(-50%, -50%);
         width: 90vw;
-        z-index: -1;
         }
     #scroll-to-top-button {
         display: none;
@@ -56,14 +55,14 @@ body {
 }
 
 ruby {
-    display: inline-flex;
-    flex-flow: row nowrap;
+    ruby-position: over;
+    ruby-align: center;
+    white-space: nowrap;
+    margin-top: -0.5em;
 }
 
 rt {
-    position: fixed;
     font-size: 50%;
-    text-align: center;
 }
 
 #upload-csv, #csv {
@@ -251,7 +250,6 @@ button {
         left: 50%;
         transform: translate(-50%, -50%);
         width: 90vw;
-        z-index: -1;
     }
 
     #scroll-to-top-button {

@@ -26,13 +26,13 @@
         <p id="ja"></p>
         <p id="en"></p>
         <p id="words"></p>
-        <input type="password" id="en-input" style="opacity: 0; position: absolute; left: -9999px; top: 0; display: block;" autocomplete="off">
+        <input onblur="this.focus()" type="password" id="en-input" style="opacity: 0; position: absolute; left: -9999px; top: 0; display: block;" autocomplete="off">
     </section>
     <button id="reset" onclick="resetHistory()">Reset History</button>
     <button id="scroll-to-top-button" onclick="scrollToTop()">Scroll to Top</button>
 </main>
 <p id="player"></p>
-<div class="switch">
+<div class="switch" id="furiganaSettings">
     <input class="check-toggle check-toggle-round-flat" id="furigana-toggle" type="checkbox">
     <label for="furigana-toggle"></label>
     <span class="on">ON</span>

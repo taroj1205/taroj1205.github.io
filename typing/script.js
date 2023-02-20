@@ -19,8 +19,6 @@ switchFurigana = document.querySelector(".switch input");
 num = 0;
 
 var switchEl = document.querySelector('.switch input');
-var furiganaSettings = localStorage.getItem("furiganaSettings");
-var furiganaText = document.getElementById("furigana");
 
 window.onload = function() {
     usernameText.value = localStorage.getItem('username');
@@ -33,13 +31,21 @@ window.onload = function() {
         passwordInput.focus();
     }
 
-    var furiganaSettings = localStorage.getItem(furiganaSettings);
-    if (furiganaSettings === "off") {
-        switchEl.checked = false;
-        localStorage.setItem("off", furiganaSettings);
-    } if (furiganaSettings == "on") {
+    var furiganaSettings = localStorage.getItem("furiganaSettings");
+    if (furiganaSettings)
+    {
+        if (furiganaSettings === "off") {
         switchEl.checked = true;
-        localStorage.setItem("on", furiganaSettings);
+        localStorage.setItem("off", furiganaSettings);
+        } if (furiganaSettings === "on") {
+            switchEl.checked = false;
+            localStorage.setItem("on", furiganaSettings);
+        }
+        console.log("furigana settings:", furiganaSettings);
+    } if (!furiganaSettings)
+    {
+        localStorage.setItem("furiganaSettings", "off");
+        switchEl.checked = true;
     }
 };
 
@@ -108,73 +114,40 @@ function newWord() {
     currentWordEN = en;
     currentWordJA = ja;
 
-    if (localStorage.getItem(furiganaSettings) === "on")
+    if (localStorage.getItem("furiganaSettings") === "on")
     {
-        extractKanji(ja);
+        const words = ja.match(/[\p{Script=Han}]+/ug);
+        if (words)
+        {
+            furigana(ja);
+        }
     }
 
     document.querySelector("#ja").innerHTML = ja;
     document.querySelector("#en").innerHTML = "<span style='color: white;'>" + en + "</span>";
 }
 
-function extractKanji(ja) {
-    if (ja) {
-        // Use a regular expression to match words in the Japanese text
-        const words = ja.match(/[\p{Script=Han}]+/ug);
-        if (words)
-        {
-            console.log("words:", words);
-            const data = { ja: ja, kanji: words.filter(word => /[\p{Script=Han}]+/u.test(word)) };
-            console.log(data);
-            furigana(data);
-        }
-    }
-}
-
-function furigana(data) {
-    // Create a new XMLHttpRequest object
-    const xhr = new XMLHttpRequest();
-
-    // Set the request method and URL
+// Check if the username and password match a stored database
+function furigana(ja) {
+    let xhr = new XMLHttpRequest();
     xhr.open("POST", "http://172.29.64.27:5000/furigana", true);
-
-    // Set the request header (if needed)
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-    // Set the data to send (in this example, a JSON object)
-    const json = JSON.stringify(data);
-
-    // Set the function to execute when the server responds
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            const furigana = JSON.parse(xhr.responseText);
-            console.log(furigana);
-            displayFurigana(data, furigana);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                displayFurigana(response);
+            } else {
+                document.querySelector('body').innerHTML = '<h1 style="text-align: center; font-size: 10vh;">Offline contact <a href="https://twitter.com/taroj1205">@taroj1205</a></h1>';
+            }
         }
     };
-    // Send the request
-    xhr.send(json);
+    xhr.send("word=" + encodeURIComponent(ja));
 }
 
-function displayFurigana(data, furigana) {
-    console.log('displayFurigana:', data, furigana);
-    let html = "";
-    const ja = data.ja;
-    const kanji = data.kanji;
-    let furiganaIndex = 0;
-
-    for (let i = 0; i < ja.length; i++) {
-        const char = ja[i];
-        if (kanji.includes(char)) {
-            console.log('ruby:', char, furigana[furiganaIndex]);
-            html += `<ruby>${char}<rt id="furigana">${furigana[furiganaIndex]}</rt></ruby>`;
-            furiganaIndex++;
-        } else {
-            html += char;
-        }
-    }
-
-    document.querySelector("#ja").innerHTML = html;
+function displayFurigana(response) {
+    console.log(response);
+    document.querySelector("#ja").innerHTML = response;
 }
 
 function start() {
@@ -404,24 +377,21 @@ const removeContainer = () => {
     }
 };
 
-let isInputFocused = true;
 const enInput = document.getElementById("en-input");
 
 menuToggle.addEventListener("click", function() {
     historyMenu.style.display = (historyMenu.style.display === "inline-block") ? "none" : "inline-block";
     enInput.style.display = (enInput.style.display === "block") ? "none" : "block";
+    if (enInput.style.display === "block")
+        {
+            enInput.focus();
+            console.log("Focus changed!");
+        }
 });
 
-document.addEventListener('click', function(event) {
-    if (document.activeElement.id === 'en-input') {
-        event.preventDefault();
-    } else {
-        enInput.focus();
-    }
-}, { passive: false });
-
 switchFurigana.addEventListener('change', e => {
-    set = e.target.checked ? 'off' : 'on';
-    localStorage.setItem(furiganaSettings, set);
-    switchEl.checked = e.target.checked ? true : false;
+    console.log("buttonc lcikcckceck");
+    let set = e.target.checked ? 'off' : 'on';
+    localStorage.setItem("furiganaSettings", set);
+    switchEl.checked = !!e.target.checked;
 });
