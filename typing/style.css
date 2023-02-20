@@ -6,6 +6,7 @@
 @media only screen and (min-width: 800px) {
     #history::-webkit-scrollbar {
         display: none;
+        overflow: auto !important;
     }
 
     #history-menu {
@@ -19,11 +20,10 @@
     }
 
     #reset {
-        position: fixed;
         font-size: 1vw;
         text-align: right;
-        right: 0;
-        bottom: 0;
+        right: 10px;
+        bottom: 10px;
         display: none;
     }
 
@@ -55,6 +55,7 @@ body {
     right: 0;
     bottom: 0;
     position: fixed;
+    overflow: hidden;
 }
 
 ruby {
@@ -179,6 +180,7 @@ button {
         font-size: 4vw;
         text-align: center;
         height: 100vh;
+        overflow: auto !important;
     }
 
     #history::-webkit-scrollbar {
@@ -232,7 +234,6 @@ button {
     }
 
     body.run #reset {
-        width: larger;
         font-size: 1rem;
     }
 
@@ -240,8 +241,8 @@ button {
         position: fixed;
         font-size: 1vw;
         text-align: right;
-        right: 0;
-        bottom: 0;
+        right: 10px;
+        bottom: 10px;
         display: none;
     }
 
@@ -278,6 +279,10 @@ button {
     right: 10px;
 }
 
+#reset, .switch {
+    position: absolute !important;
+}
+
 #words {
     font-size: 1.5vw;
     position: fixed;
@@ -310,7 +315,7 @@ rt {
     position: fixed;
     display: inline-block;
     margin: 0 5px;
-    bottom: 5px;
+    bottom: 10px;
     left: 0;
 }
 
