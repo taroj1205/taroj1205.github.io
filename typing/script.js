@@ -52,7 +52,7 @@ window.onload = function() {
 // Check if the username and password match a stored database
 function checkCredentials(username, password) {
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://172.29.64.27:5000/check", true);
+    xhr.open("POST", "https://taroj1205.pythonanywhere.com//check", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -130,7 +130,7 @@ function newWord() {
 // Check if the username and password match a stored database
 function furigana(ja) {
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://172.29.64.27:5000/furigana", true);
+    xhr.open("POST", "https://taroj1205.pythonanywhere.com//furigana", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -229,7 +229,7 @@ function submitData(currentWordEN, currentWordJA) {
     let en = currentWordEN;
     let ja = currentWordJA;
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://172.29.64.27:5000', true);
+    xhr.open('POST', 'https://taroj1205.pythonanywhere.com/', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -250,7 +250,7 @@ function submitData(currentWordEN, currentWordJA) {
 function getData() {
     const xhr = new XMLHttpRequest();
     const username = localStorage.getItem('username');
-    xhr.open('GET', 'http://172.29.64.27:5000/data/' + username, true);
+    xhr.open('GET', 'https://taroj1205.pythonanywhere.com//data/' + username, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -277,7 +277,7 @@ function resetHistory() {
         return;
     }
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://172.29.64.27:5000/reset", true);
+    xhr.open("POST", "https://taroj1205.pythonanywhere.com//reset", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
