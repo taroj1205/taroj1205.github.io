@@ -49,7 +49,7 @@ body {
     color: white;
     font-family: 'Noto Sans JP', 'Ui Gothic', 'Consolas', 'Arial', sans-serif;
     height: 100%;
-    width: 100vw;
+    width: 100%;
     top: 0;
     left: 0;
     position: fixed;
@@ -241,7 +241,7 @@ button {
     #game {
         display: none;
         position: absolute;
-        top: 50%;
+        top: 40%;
         left: 50%;
         transform: translate(-50%, -50%);
     }
