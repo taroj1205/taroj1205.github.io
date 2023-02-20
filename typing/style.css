@@ -224,7 +224,7 @@ button {
 
     #ja, #en {
         white-space: nowrap;
-        max-width: 90vw;
+        max-width: 90vw !important;
     }
 
     #words {
@@ -291,7 +291,10 @@ button {
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 23px;
+}
+
+#ja:has(ruby) {
+    margin-top: 39px;
 }
 
 .switch {
