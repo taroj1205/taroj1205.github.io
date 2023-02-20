@@ -172,6 +172,7 @@ button {
         font-size: 4vw;
         text-align: center;
         height: 100vh;
+        overflow-y: auto !important;
     }
 
     #history::-webkit-scrollbar {
