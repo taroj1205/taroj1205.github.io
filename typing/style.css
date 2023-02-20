@@ -238,7 +238,6 @@ button {
     }
 
     #reset {
-        position: fixed;
         font-size: 1vw;
         text-align: right;
         right: 10px;
