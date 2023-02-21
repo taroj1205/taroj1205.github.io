@@ -290,7 +290,7 @@ button {
     text-align: center;
 }
 
-#en, #ja {
+#en, #ja, #words {
     white-space: nowrap;
 }
 
