@@ -228,7 +228,6 @@ button {
     }
 
     #ja, #en {
-        white-space: nowrap;
         max-width: 90vw !important;
     }
 
@@ -289,6 +288,10 @@ button {
     font-size: 1.5vw;
     position: fixed;
     text-align: center;
+}
+
+#en, #ja {
+    white-space: nowrap;
 }
 
 #en {
