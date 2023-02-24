@@ -285,6 +285,7 @@ function resetHistory() {
             if (xhr.responseText === "valid") {
                 alert("History has been reset.");
                 document.getElementById('history').innerHTML = "";
+                document.getElementById('words').innerHTML = "Words: 0";
             }
             // If the password doesn't match, retry the form
             else {
@@ -311,7 +312,7 @@ function openFilePicker() {
         input.style.width = '60vw';
         input.style.height = '50vh';
         input.value = localStorage.getItem('csv');
-        input.placeholder = 'Paste CSV here...\nExample:\na,あ\ni,い';
+        input.placeholder = 'Paste CSV here or submit empty to reset...\nExample:\na,あ\ni,い';
 
         const submit = document.createElement('button');
         submit.innerText = 'Submit';
