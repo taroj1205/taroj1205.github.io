@@ -11,9 +11,13 @@ app = Flask(__name__)
 CORS(app)
 kks = pykakasi.kakasi()
 
-# Create the data directory if it doesn't exist
-if not os.path.exists("data"):
-    os.makedirs("data")
+def makeDataDir():
+    # Create the data directory if it doesn't exist
+    if not os.path.exists("data"):
+        os.makedirs("data")
+        print("Created data directory!")
+
+makeDataDir()
 
 @app.route('/', methods=['POST'])
 def submit_data():
@@ -25,6 +29,7 @@ def submit_data():
     if not username or not en or not ja or not password:
         return "Error: Missing data in the request"
 
+    makeDataDir()
     conn = sqlite3.connect(f"data/{username}/history.db")
     c = conn.cursor()
     c.execute("CREATE TABLE IF NOT EXISTS data (english, 日本語)")
@@ -36,6 +41,7 @@ def submit_data():
 
 @app.route('/data/<username>', methods=['GET'])
 def get_data(username):
+    makeDataDir()
     dataPath = f"data/{username}/history.db"
     if os.path.exists(dataPath):
         conn = sqlite3.connect(dataPath)
@@ -58,6 +64,7 @@ def get_data(username):
 def check():
     username = request.form["username"]
     password = request.form["password"]
+    makeDataDir()
     conn = sqlite3.connect("data/username.db")
     c = conn.cursor()
     c.execute("CREATE TABLE IF NOT EXISTS data (username TEXT, password_hash TEXT, time TEXT)")
@@ -88,7 +95,7 @@ def check():
 def reset():
     username = request.form.get("username")
     password = request.form.get("password")
-
+    makeDataDir()
     conn = sqlite3.connect("data/username.db")
     c = conn.cursor()
     c.execute("SELECT * FROM data WHERE username = ?", (username,))
