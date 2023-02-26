@@ -58,9 +58,9 @@ def get_data(username):
 def check():
     username = request.form["username"]
     password = request.form["password"]
-    conn = sqlite3.connect(f"data/{username}/history.db")
+    conn = sqlite3.connect("data/username.db")
     c = conn.cursor()
-    c.execute("CREATE TABLE IF NOT EXISTS data (username,password_hash,time)")
+    c.execute("CREATE TABLE IF NOT EXISTS data (username TEXT, password_hash TEXT, time TEXT)")
     c.execute("SELECT * FROM data")
     existing_data = c.fetchall()
     for data in existing_data:
