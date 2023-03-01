@@ -24,34 +24,38 @@
     <meta name="designer" content="taroj1205" />
 </head>
 <body>
-<main>
-    <button id="menu-toggle">&#9776;</button>
-    <div id="history-menu">
-      <div id="history"></div>
+<div id="main">
+    <main>
+        <button id="menu-toggle">&#9776;</button>
+        <div id="history-menu">
+        <div id="history"></div>
+        </div>
+        <section id="startMenu" style="display:flex;">
+            <form name="enter_username">
+                <input type="text" name="username" id="username" required autocomplete="username" placeholder="username">
+                <input type="password" name="password" id="password" required placeholder="password">
+                <br />
+                <input type="submit" value="Submit" id="username-submit">
+            </form>
+        </section>
+        <section id="game">
+            <p id="ja"></p>
+            <p id="en" onclick='setTimeout("enInput.focus()", 0);'></p>
+            <p id="words"></p>
+            <input type="password" id="en-input" style="opacity: 0; position: absolute; left: -9999px; top: 0; display: block;" autofocus autocomplete="off">
+        </section>
+        <section id="buttons" style="display: block;">
+            <button id="upload-csv" onclick="openFilePicker()" style="display:none;">Upload or Copy-Paste CSV File</button>
+            <button id="reset" onclick="resetHistory()">Reset History</button>
+        </section>
+    </main>
+    <p id="player"></p>
+    <div class="switch" id="furiganaSettings">
+        <input class="check-toggle check-toggle-round-flat" id="furigana-toggle" type="checkbox">
+        <label for="furigana-toggle"></label>
+        <span class="on">ON</span>
+        <span class="off">OFF</span>
     </div>
-    <section id="startMenu" style="display:flex;">
-        <form name="enter_username">
-            <input type="text" name="username" id="username" required autocomplete="username" placeholder="username">
-            <input type="password" name="password" id="password" required placeholder="password">
-            <br />
-            <input type="submit" value="Submit" id="username-submit">
-        </form>
-    </section>
-    <button id="upload-csv" onclick="openFilePicker()" style="display:block;">Upload or Copy-Paste CSV File</button>
-    <section id="game">
-        <p id="ja"></p>
-        <p id="en" onclick='setTimeout("enInput.focus()", 0);'></p>
-        <p id="words"></p>
-        <input type="password" id="en-input" style="opacity: 0; position: absolute; left: -9999px; top: 0; display: block;" autofocus autocomplete="off">
-    </section>
-    <button id="reset" onclick="resetHistory()">Reset History</button>
-</main>
-<p id="player"></p>
-<div class="switch" id="furiganaSettings">
-    <input class="check-toggle check-toggle-round-flat" id="furigana-toggle" type="checkbox">
-    <label for="furigana-toggle"></label>
-    <span class="on">ON</span>
-    <span class="off">OFF</span>
 </div>
 <script async src="script.js"></script>
 <!-- Google tag (gtag.js) -->

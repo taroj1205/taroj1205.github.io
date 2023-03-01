@@ -16,15 +16,17 @@ usernameInput = document.querySelector("#username");
 passwordInput = document.querySelector("#password");
 switchFurigana = document.querySelector(".switch input");
 enInput = document.getElementById("en-input")
+main = document.getElementById("main");
 
 num = 0;
 
 var switchEl = document.querySelector('.switch input');
 
 window.onload = function() {
+    uploadCSVButton.style.display = "none";
     usernameText.value = localStorage.getItem('username');
     passwordText.value = localStorage.getItem('password');
-    if (window.matchMedia("(min-width: 800px)").matches || !usernameText) {
+    if (window.matchMedia("(min-width: 800px)").matches) {
         usernameInput.focus();
     }
     else if (!passwordText)
@@ -48,18 +50,36 @@ window.onload = function() {
         localStorage.setItem("furiganaSettings", "off");
         switchEl.checked = true;
     }
+
+    if (!localStorage.getItem("defaultCSV"))
+    {
+        // If CSV is not provided by user, use the default
+        const request = new XMLHttpRequest();
+        request.open("GET", 'https://gist.githubusercontent.com/taroj1205/420c2e76184a47b18543c52ba229f510/raw/adcef62cf11593879be2ed1d715daeeca9bda7e5/dictionary.csv', true);
+        request.onreadystatechange = function() {
+            if (this.readyState === 4 && this.status === 200) {
+                csv = this.responseText;
+                localStorage.setItem('defaultCSV', csv);
+            } else if (this.readyState === XMLHttpRequest.DONE && this.status !== 200) {
+            document.querySelector('body').innerHTML = '<h1 style="text-align: center; font-size: 10vh;">Offline contact <a href="https://twitter.com/taroj1205">@taroj1205</a></h1>';
+            }
+        };
+        request.send();
+    }
 };
 
 // Check if the username and password match a stored database
 function checkCredentials(username, password) {
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://taroj1205.pythonanywhere.com/check", true);
+    xhr.open("POST", "http://172.25.238.211:5000/check", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
             // If the username exists in the database and the password matches, continue
             if (xhr.responseText === "valid") {
                 document.getElementById('player').innerText = "Player: " + username;
+                csv = localStorage.getItem('csv');
+                console.log(username);
                 getData();
                 start();
             }
@@ -106,6 +126,10 @@ var currentWordEN;
 var currentWordJA;
 
 function newWord() {
+    getCSV();
+    localStorage.getItem('csv');
+    lines = csv.split("\n");
+    console.log("csv:", lines);
     var randomLine = lines[Math.floor(Math.random() * lines.length)];
     if (randomLine === 0)
     {
@@ -131,7 +155,7 @@ function newWord() {
 // Check if the username and password match a stored database
 function furigana(ja) {
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://taroj1205.pythonanywhere.com/furigana", true);
+    xhr.open("POST", "http://172.25.238.211:5000/furigana", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -153,38 +177,22 @@ function displayFurigana(response) {
 
 function start() {
     let num = 0;
+    getCSV();
     let csv = localStorage.getItem('csv'); // get the CSV from local storage
+    uploadCSVButton.style.display = "block";
     removeContainer();
     if (csv) {
-        lines = csv.split("\n");
-        game(lines,num);
-    }
-    else {
-        // If CSV is not provided by user, use the default
-        const request = new XMLHttpRequest();
-        request.open("GET", 'https://gist.githubusercontent.com/taroj1205/420c2e76184a47b18543c52ba229f510/raw/adcef62cf11593879be2ed1d715daeeca9bda7e5/dictionary.csv', true);
-        request.onreadystatechange = function() {
-            if (this.readyState === 4 && this.status === 200) {
-                lines = this.responseText.split("\n");
-                localStorage.setItem('csv', this.responseText); // store the CSV in local storage
-                game(lines,num);
-            }
-        else if (this.readyState === XMLHttpRequest.DONE && this.status !== 200) {
-            document.querySelector('body').innerHTML = '<h1 style="text-align: center; font-size: 10vh;">Offline contact <a href="https://twitter.com/taroj1205">@taroj1205</a></h1>';
-        }
-        };
-        request.send();
+        game(num);
     }
 }
 
-function game(lines,num)
+function game(num)
 {
     gameText.style.display = "inline-block";
     startMenuText.style.display = "none";
     playerText.style.display = "inline-block";
     resetText.style.display = "inline-block";
     wordsText.style.display = "inline-block";
-    uploadCSVButton.style.display = "none";
 
     enInput.focus();
 
@@ -229,7 +237,7 @@ function submitData(currentWordEN, currentWordJA) {
     let en = currentWordEN;
     let ja = currentWordJA;
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://taroj1205.pythonanywhere.com/', true);
+    xhr.open('POST', 'http://172.25.238.211:5000/submit', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -240,21 +248,22 @@ function submitData(currentWordEN, currentWordJA) {
         }
     };
     const username = localStorage.getItem('username');
-    const password = localStorage.getItem('password');
-    const data = 'username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password) + '&en=' + encodeURIComponent(en) + '&ja=' + encodeURIComponent(ja);
+    const csvName = localStorage.getItem('csvName');
+    const data = 'username=' + encodeURIComponent(username) + '&en=' + encodeURIComponent(en) + '&ja=' + encodeURIComponent(ja) + '&csvName=' + encodeURIComponent(csvName);
     xhr.send(data);
     document.querySelector("#words").innerHTML = "Words: " + historyText.getElementsByTagName("p").length;
 }
 
-// Receive data
 function getData() {
     const xhr = new XMLHttpRequest();
     const username = localStorage.getItem('username');
-    xhr.open('GET', 'https://taroj1205.pythonanywhere.com/data/' + username, true);
+    const csvName = localStorage.getItem('csvName');
+    xhr.open('POST', 'http://172.25.238.211:5000/data', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
             const data = JSON.parse(xhr.responseText);
+            console.log(data);
             for (let i = data.length - 1; i >= 0; i--) {
                 const item = data[i];
                 const p = document.createElement('p');
@@ -263,11 +272,16 @@ function getData() {
                 document.querySelector("#words").innerHTML = "Words: " + historyText.getElementsByTagName("p").length;
             }
         }
+        else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 400) {
+            const data = JSON.parse(xhr.responseText);
+            console.log(data.error);
+        }
         else if (xhr.readyState === XMLHttpRequest.DONE && xhr.status !== 200) {
             document.querySelector('body').innerHTML = '<h1 style="text-align: center; font-size: 10vh;">Offline contact <a href="https://twitter.com/taroj1205">@taroj1205</a></h1>';
         }
     };
-    xhr.send();
+    const data = JSON.stringify({ 'username': username, 'csvName': csvName });
+    xhr.send(data);
 }
 
 function resetHistory() {
@@ -277,7 +291,7 @@ function resetHistory() {
         return;
     }
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://taroj1205.pythonanywhere.com/reset", true);
+    xhr.open("POST", "http://172.25.238.211:5000/reset", true);
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
@@ -299,75 +313,144 @@ function resetHistory() {
     xhr.send("username=" + username + "&password=" + password);
 }
 
+function getCSV() {
+    const username = localStorage.getItem('username');
+    const csvName = localStorage.getItem('csvName');
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          const csvData = response.csvData;
+          console.log(`Received CSV data: ${csvData}`);
+          localStorage.setItem('csv', csvData);
+        } else {
+          alert('Error getting CSV file from Flask server!');
+        }
+      }
+    };
+    xhr.open('GET', `http://172.25.238.211:5000/get_csv?csvName=${csvName}&username=${username}`);
+    xhr.send();
+  }
+
 function openFilePicker() {
-    // toggle the start menu
-    startMenuText.style.display = (startMenuText.style.display === "flex") ? "none" : "flex";
-    uploadCSVButton.style.display = (uploadCSVButton.style.display === "block") ? "none" : "block";
+    main.style.display = (main.style.display === "block") ? "block" : "none";
+    enInput.style.display = (enInput.style.display === "block") ? "block" : "none";
 
-    if (!document.getElementById('csv')) {
-        // create the file picker elements
-        const input = document.createElement('textarea');
-        input.rows = 10;
-        input.cols = 50;
-        input.style.width = '60vw';
-        input.style.height = '50vh';
-        input.value = localStorage.getItem('csv');
-        input.placeholder = 'Paste CSV here or submit empty to reset...\nExample:\na,あ\ni,い';
+    const input = document.createElement('textarea');
+    input.rows = 10;
+    input.cols = 50;
+    input.style.width = '60vw';
+    input.style.height = '50vh';
+    input.value = '';
+    input.placeholder = 'Paste CSV here...\nExample:\na,あ\ni,い';
 
-        const submit = document.createElement('button');
-        submit.innerText = 'Submit';
-        submit.onclick = function() {
+    const submit = document.createElement('button');
+    submit.innerText = 'Submit';
+    submit.onclick = function() {
+        const csv = input.value.trim();
+        if (csv.length === 0) {
+            if (confirm('Are you sure you want to reset the CSV?')) {
+                localStorage.setItem('csvName', 'default');
+                let defaultCSV = localStorage.getItem('defaultCSV');
+                localStorage.setItem('csv', defaultCSV);
+                sendCSVToFlask(csv, username);
+                alert('CSV reset successful!');
+                removeContainer();
+            }
+        } else {
             // process the submitted CSV
-            const csv = input.value.trim();
-            if (csv.length == 0) {
-                if (confirm("Are you sure you want to reset the CSV?")) {
-                    localStorage.removeItem('csv');
-                    alert('Done a csv reset!');
-                    removeContainer();
-                }
-            } else {
-                const lines = csv.split('\n');
-                const firstLine = lines[0].trim();
-                const lastLine = lines[lines.length - 1].trim();
-                const numColsFirstLine = firstLine.split(',').length;
-                const numColsLastLine = lastLine.split(',').length;
-                if (numColsFirstLine > 1 && numColsFirstLine === numColsLastLine) {
-                    localStorage.setItem('csv', csv); // store the CSV in local storage
-                    alert('CSV file saved to local storage! ' + csv);
-                    removeContainer();
+            let csvName = '';
+            while (!csvName || csvName.toLowerCase() === 'default') {
+                csvName = prompt('Please enter a name for the CSV file:');
+                if (!csvName) {
+                    alert('Invalid name. Please enter a different name.');
+                } else if (csvName.toLowerCase() === 'default') {
+                    alert('The name "default" is reserved. Please enter a different name.');
                 } else {
-                    alert('The input is not a valid CSV file!\nExample:\na,あ\ni,い');
+                    sendCSVToFlask(csv, username);
                 }
             }
-        };
+            const lines = csv.split('\n');
+            const firstLine = lines[0].trim();
+            const lastLine = lines[lines.length - 1].trim();
+            const numColsFirstLine = firstLine.split(',').length;
+            const numColsLastLine = lastLine.split(',').length;
+            if (numColsFirstLine > 1 && numColsFirstLine === numColsLastLine) {
+                localStorage.setItem('csvName', csvName);
+                localStorage.setItem('csv', csv); // store the CSV in local storage
+                removeContainer();
+            } else {
+                alert('The input is not a valid CSV file!\nExample:\na,あ\ni,い');
+            }
+        }
+    };
 
-        const cancel = document.createElement('button');
-        cancel.innerText = 'Cancel';
-        cancel.onclick = function() {
+    const cancel = document.createElement('button');
+    cancel.innerText = 'Cancel';
+    cancel.onclick = function() {
+        removeContainer();
+    };
+
+    const useSaved = document.createElement('button');
+    useSaved.innerText = 'Use Saved CSV';
+    useSaved.onclick = async function() {
+        const username = localStorage.getItem('username');
+        let enteredName = '';
+        const response = await fetch('http://172.25.238.211:5000/listCSVName', {
+            method: 'POST',
+            body: JSON.stringify({username: username}),
+            headers: {'Content-Type': 'application/json'}
+        });
+        const csvNames = await response.json();
+        console.log(csvNames);
+        enteredName = prompt(`Please enter the name of the CSV file you want to use. Available options:\n${csvNames.join(',')}`);
+
+        while (!csvNames.includes(enteredName)) {
+            enteredName = prompt(`Could not find CSV with name "${enteredName}" in saved list.\nAvailable options:\n${csvNames.join(',')}`);
+            if (csvNames.includes(enteredName)) {
+                console.log("The name matches!");
+                newWord();
+                const history = document.getElementById('history');
+                localStorage.setItem('csvName', enteredName);
+                history.innerHTML = '';
+                console.log("Cleared history display!");
+                getData();
+                removeContainer();
+            }
+
+            if (enteredName === null) {
+                removeContainer();
+                return;
+            }
+        }
+
+        if (csvNames.includes(enteredName)) {
+            console.log("The name matches!");
+            localStorage.setItem('csvName', enteredName);
+            const history = document.getElementById('history');
+            history.innerHTML = '';
+            console.log("Cleared history display!");
+            newWord();
             removeContainer();
-        };
+        }
+        localStorage.setItem('csvName', enteredName);
+        alert('CSV loaded successfully!');
+        removeContainer();
+    };
 
-        // create the container element
-        const container = document.createElement('div');
-        container.id = 'csv'; // add "csv" class to the container element
-        container.style.position = 'absolute';
-        container.appendChild(input);
-        container.appendChild(document.createElement("br"));
-        container.appendChild(submit);
-        container.appendChild(cancel);
-        document.body.appendChild(container);
-    }
-
-    function removeContainer() {
-        // remove the file picker elements
-        const container = document.getElementById('csv');
-        container.parentNode.removeChild(container);
-
-        // toggle the start menu display
-        startMenuText.style.display = (startMenuText.style.display === "none") ? "flex" : "none";
-        uploadCSVButton.style.display = (uploadCSVButton.style.display === "none") ? "block" : "none";
-    }
+    // create the container element
+    const container = document.createElement('div');
+    container.id = 'csv'; // add "csv" class to the container element
+    container.style.position = 'absolute';
+    container.appendChild(input);
+    container.appendChild(document.createElement('br'));
+    container.appendChild(submit);
+    container.appendChild(cancel);
+    container.appendChild(useSaved);
+    document.body.appendChild(container);
 }
+
 
 
 const removeContainer = () => {
@@ -375,8 +458,34 @@ const removeContainer = () => {
     if (container)
     {
         container.remove();
+        main.style.display = (main.style.display === 'none') ? 'block' : 'none';
+        enInput.style.display = (enInput.style.display === 'none') ? 'block' : 'none';
+        enInput.focus();
     }
 };
+
+function sendCSVToFlask(csv, username) {
+    const csvName = localStorage.getItem('csvName');
+    console.log(username);
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                return;
+            } else {
+                alert('Error sending CSV file to Flask server!');
+            }
+        }
+    };
+    xhr.open('POST', 'http://172.25.238.211:5000/upload_csv');
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    const data = {
+        csvName: csvName,
+        csvData: csv,
+        username: username
+    };
+    xhr.send(JSON.stringify(data));
+}
 
 menuToggle.addEventListener("click", function() {
     historyMenu.style.display = (historyMenu.style.display === "inline-block") ? "none" : "inline-block";

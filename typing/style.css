@@ -77,8 +77,8 @@ rt {
 }
 
 #upload-csv, #csv {
-    top: 0;
-    left: 0;
+    bottom: 35px;
+    right: 10px;
     position: absolute;
 }
 
