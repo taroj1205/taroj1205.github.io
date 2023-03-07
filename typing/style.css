@@ -42,17 +42,14 @@
     #words {
         transform: translate(-50%, 100%);
     }
-
-    body {
-        height: 100%;
-    }
 }
 
 body {
     background-color: rgb(15, 15, 15);
     color: white;
-    font-family: 'Noto Sans JP', 'Ui Gothic', 'Consolas', 'Arial', sans-serif;
-    width: 100%;
+    font-family: 'Noto Sans JP', 'Ui Gothic', 'Consolas', 'Arial', 'sans-serif';
+    width: var(--vvw);
+    height: var(--vvh);
     top: 0;
     left: 0;
     right: 0;
@@ -173,10 +170,6 @@ button {
     body.run #menu-toggle {
         display: block;
         color: #fff;
-    }
-
-    body {
-        height: 99%;
     }
 
     #history {
